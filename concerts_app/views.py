@@ -14,9 +14,10 @@ from django.views.generic import (
     DeleteView,
 )
 from .models import Concierto, Artista
-from .forms import ArtistaForm, CrearConciertoForm, ConciertoFiltroFrom
+from .forms import ArtistaForm, CrearConciertoForm
 from tickets_app.models import Reserva, Valoracion
 from django.db.models import Sum
+from festivales_app.models import Festival
 
 # Create your views here.
 
@@ -28,63 +29,15 @@ def index(request):
 # region Conciertos
 
 
-class ListarConciertosUsuario(ListView):
-
-    model = Concierto
-    form_class = ConciertoFiltroFrom
-    template_name = "concerts_app/"
 
 
-# Usuarios normales
-class ConciertoListView(ListView):
 
-    model = Concierto
-    template_name = "concerts_app/conciertos/concierto_list.html"
-    form_class = ConciertoFiltroFrom
-    queryset = Concierto.objects.all()
-
-    # queryset = Concierto.objects.filter(fecha__gt=datetime.now())
-
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        form = self.form_class(
-            self.request.GET
-        )  # Esto es para que nos venga relleno el formulario
-        context["form"] = form
-        if form.is_valid():
-            nombreConcierto = form.cleaned_data.get("nombreConcierto")
-            artista = form.cleaned_data.get("artista")
-            ubicacion = form.cleaned_data.get("ubicacion_concierto")
-            fecha_ascendente = form.cleaned_data.get("fecha_ascendente")
-
-            conciertosFuturos = self.queryset.filter(fecha__gt=datetime.now())
-            conciertosPasados = self.queryset.filter(fecha__lt=datetime.now())
-
-            if nombreConcierto != "":
-                conciertosFuturos = conciertosFuturos.filter(
-                    nombre__icontains=nombreConcierto
-                )
-                conciertosPasados = conciertosPasados.filter(
-                    nombre__icontains=nombreConcierto
-                )
-
-            if artista is not None:
-                conciertosFuturos = conciertosFuturos.filter(artista_concierto=artista)
-                conciertosPasados = conciertosPasados.filter(artista_concierto=artista)
-            if ubicacion is not None:
-                conciertosFuturos = conciertosFuturos.filter(
-                    ubicacion_concierto=ubicacion
-                )
-                conciertosPasados = conciertosPasados.filter(
-                    ubicacion_concierto=ubicacion
-                )
-            if fecha_ascendente:
-                conciertosFuturos = conciertosFuturos.order_by("fecha")
-                conciertosPasados = conciertosPasados.order_by("fecha")
-
-            context["conciertosFuturos"] = conciertosFuturos
-            context["conciertosPasados"] = conciertosPasados
-        return context
+class ListarConciertosFestival(View):
+    def get(self, request, pk):
+        conciertos = Festival.objects.get(pk=pk).conciertos.all()
+        festival = get_object_or_404(Festival, pk=pk)
+        return render(request, "concerts_app/conciertos/concierto_list.html", {"conciertos": conciertos, "festival": festival})
+    
 
 
 class ConciertoDetailView(DetailView):

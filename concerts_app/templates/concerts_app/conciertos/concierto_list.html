@@ -1,78 +1,23 @@
-{% extends 'concerts_app/base.html' %}
-{% block title %}
-    Lista de conciertos
-{% endblock %}
-
-{% block content %}
+{% extends 'concerts\_app/base.html' %} 
+{% block title %} Lista de conciertos {% endblock %} 
+{% block content %} 
 <div class="row">
-    <div class="col">
-        <h1 class="text-center mb-5 text-white">Bienvenido a ConcertHub{% if request.user.is_authenticated %},{{request.user.username}}{%endif%}</h1>
-
-        <form action="" method="GET">
-            {% csrf_token %}
-            {{ form.as_p }}
-            
-            <input type="submit" value="Filtrar" class="btn btn-primary mt-3 ">
-
-        </form>
-        <h2 class="mt-5 mb-4">Próximos conciertos:</h2>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for concierto in conciertosFuturos %}
-            <div class="col">
-                <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
-                    <img src="{{ concierto.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Concierto Image" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">{{ concierto.nombre }}</h5>
-                        <p class="card-text text-white mb-1"><i class="bi bi-person"></i> Artista: {{ concierto.artista_concierto }}</p>
-                        <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ concierto.fecha }}</p>
-                        <p class="card-text text-white mb-1"><i class="bi bi-geo-alt"></i> Ubicación: {{ concierto.ubicacion_concierto }}</p>
-                        <p class="card-text text-white mb-3"><i class="bi bi-cash"></i> Precio: {{ concierto.precio_entrada }}€</p>
-                        <a href="{% url 'concierto_detail' pk=concierto.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a>
-                        {% if user.is_staff %}
-                            <a href="{% url 'concierto_delete' pk=concierto.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
-                            <a href="{% url 'concierto_update' pk=concierto.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i> Editar</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        {% if user.is_authenticated %}
-        <br>
-        <a href="{% url 'listar_reservas_usuario' %}" class="btn btn-primary mt-3"><i class="bi bi-journal-text"></i> Reservas del usuario</a>
-        <br>
-        {% endif %}
-        <a href="{% url 'concierto_top_ventas' %}" class="btn btn-primary mt-3"><i class="bi bi-graph-up"></i> Conciertos más vendidos</a>
-
-        {% if user.is_staff %}
-        <h2 class="mt-5 mb-4">(Solo visible para staff) Conciertos pasados:</h2>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for concierto in conciertosPasados %}
-            <div class="col">
-                <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
-                    <img src="{{ concierto.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Concierto Image" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">{{ concierto.nombre }}</h5>
-                        <p class="card-text text-white mb-1"><i class="bi bi-person"></i> Artista: {{ concierto.artista_concierto }}</p>
-                        <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ concierto.fecha }}</p>
-                        <p class="card-text text-white mb-1"><i class="bi bi-geo-alt"></i> Ubicación: {{ concierto.ubicacion_concierto }}</p>
-                        <p class="card-text text-white mb-3"><i class="bi bi-cash"></i> Precio: {{ concierto.precio_entrada }}€</p>
-                        <a href="{% url 'concierto_detail' pk=concierto.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a>
-                        {% if user.is_staff %}
-                            <a href="{% url 'concierto_delete' pk=concierto.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
-                            <a href="{% url 'concierto_update' pk=concierto.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i> Editar</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <a href="/api" class="btn btn-primary mt-5"><i class="bi bi-code"></i> Visitar la api</a>
-        <a href="{% url 'concierto_create' %}" class="btn btn-primary mt-5"><i class="bi bi-plus"></i> Añadir Concierto</a>
-        <br>
-        <a href="{% url 'artista_create' %}" class="btn btn-primary mt-3"><i class="bi bi-plus"></i> Añadir Artista</a>
-        {% endif %}
-    </div>
+   <div class="col">
+       <h2 class="mt-5 mb-4">Próximos conciertos del festival {{festival.nombre}}</h2>
+       <div class="row row-cols-1 row-cols-md-2 g-4">
+           {% for concierto in conciertos %} 
+           <div class="col">
+               <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
+                   <img src="{{ concierto.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Concierto Image" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                   <div class="card-body">
+                       <h5 class="card-title text-white">{{ concierto.nombre }}</h5>
+                       <p class="card-text text-white mb-1"><i class="bi bi-person"></i> Artista: {{ concierto.artista\_concierto }}</p>
+                       <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ concierto.fecha }}</p>
+                   </div>
+               </div>
+           </div>
+           {% endfor %}
+       </div>
+   </div>
 </div>
 {% endblock %}

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "concerts_app",
     "tickets_app",
     "users_app",
+    "festivales_app",
 ]
 
 MIDDLEWARE = [

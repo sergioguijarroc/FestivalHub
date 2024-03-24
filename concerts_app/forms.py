@@ -1,5 +1,5 @@
 from django import forms
-from .models import Concierto, Artista, Ubicacion
+from .models import Concierto, Artista
 
 
 class CrearConciertoForm(forms.ModelForm):
@@ -8,18 +8,14 @@ class CrearConciertoForm(forms.ModelForm):
         fields = [
             "nombre",
             "artista_concierto",
-            "ubicacion_concierto",
             "fecha",
-            "precio_entrada",
             "descripcion",
             "foto",
         ]
         labels = {
             "nombre": "Nombre del concierto",
             "artista_concierto": "Artista",
-            "ubicacion_concierto": "Ubicación",
             "fecha": "Fecha",
-            "precio_entrada": "Precio de entrada",
             "descripcion": "Descripción",
             "foto": "Foto",
         }
@@ -28,12 +24,8 @@ class CrearConciertoForm(forms.ModelForm):
                 attrs={"class": "form-control", "placeholder": "Nombre del concierto"}
             ),
             "artista_concierto": forms.Select(attrs={"class": "form-control"}),
-            "ubicacion_concierto": forms.Select(attrs={"class": "form-control"}),
             "fecha": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}
-            ),
-            "precio_entrada": forms.NumberInput(
-                attrs={"class": "form-control", "min": 0}
             ),
             "descripcion": forms.Textarea(
                 attrs={
@@ -82,30 +74,3 @@ class ArtistaForm(forms.ModelForm):
             for field_name in self.fields:
                 self.fields[field_name].required = False
 
-
-class ConciertoFiltroFrom(forms.Form):
-
-    nombreConcierto = forms.CharField(
-        required=False,
-        label="Nombre del concierto",
-        widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "Nombre del concierto"}
-        ),
-    )
-    artista = forms.ModelChoiceField(
-        queryset=Artista.objects.all(),
-        required=False,
-        empty_label="Todos los Artistas",
-        widget=forms.Select(attrs={"class": "form-control"}),
-    )
-    ubicacion_concierto = forms.ModelChoiceField(
-        queryset=Ubicacion.objects.all(),
-        required=False,
-        empty_label="Todas las ubicaciones",
-        widget=forms.Select(attrs={"class": "form-control"}),
-    )
-    fecha_ascendente = forms.BooleanField(
-        required=False,
-        label="Ordenar por fecha más próxima",
-        widget=forms.CheckboxInput(attrs={"class": "form-check-input"}),
-    )
