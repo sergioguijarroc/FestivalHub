@@ -1,0 +1,14 @@
+{% extends "concerts_app/base.html" %}
+{% block title %}Logout{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4"><i class="bi bi-door-closed"></i> Sesión cerrada</h2>
+                <p class="text-center mb-4">¿Quieres <a href="{% url 'login' %}" class="btn btn-primary"><i class="bi bi-door-open"></i> iniciar sesión</a> de nuevo o volver al <a href="{% url 'concierto_list' %}" class="btn btn-primary"><i class="bi bi-house-door"></i> Home</a>?</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Comprar Entradas
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Comprar entradas para {{ concierto.nombre }} por {{ concierto.precio_entrada }}€</h2>
+                <p class="card-text">Tickets disponibles: {{ concierto.boletos_disponibles }}</p>
+                <p class="card-text">Recuerda que como máximo puedes comprar solo 5 tickets por compra</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ formulario.as_p }}
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-cart-fill"></i> Comprar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

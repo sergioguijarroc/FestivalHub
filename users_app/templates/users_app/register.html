@@ -1,0 +1,20 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Registrarse
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title"><i class="bi bi-person-plus-fill"></i> Registrarse</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check-circle-fill"></i> Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "concerts_app/base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4"><i class="bi bi-door-open"></i> Login</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

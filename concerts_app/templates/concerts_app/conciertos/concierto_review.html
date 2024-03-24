@@ -1,0 +1,29 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+Review del concierto
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card rounded">
+            <div class="card-body">
+                <h2 class="card-title"> Review del concierto de {{ concierto.nombre }}</h2>
+                <p><i class="bi bi-person"></i> <strong>Artista:</strong> {{ concierto.artista_concierto }} <a
+                        href="{% url 'artista_detail' concierto.artista_concierto.pk %}">(Más info del artista)</a></p>
+                <p><i class="bi bi-geo-alt"></i> <strong>Ubicación:</strong> {{ concierto.ubicacion_concierto }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-star"></i> <label for="valoracion">Valoración:</label></li>
+                        <li><input type="number" class="form-control" id="valoracion" name="valoracion" min="0" max="10"
+                                placeholder="Valoración" required></li>
+                        <li class="mt-3"><button type="submit" class="btn btn-primary"><i class="bi bi-check"></i>
+                                Enviar
+                                Valoración</button></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
