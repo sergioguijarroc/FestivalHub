@@ -27,11 +27,6 @@ def index(request):
 
 
 # region Conciertos
-
-
-
-
-
 class ListarConciertosFestival(View):
     def get(self, request, pk):
         conciertos = Festival.objects.get(pk=pk).conciertos.all()

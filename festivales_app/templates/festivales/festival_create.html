@@ -1,0 +1,12 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Creación de Festival
+{% endblock %}
+{% block content %}
+    <h1>Creación de Festival</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear</button>
+    </form>
+{% endblock %}

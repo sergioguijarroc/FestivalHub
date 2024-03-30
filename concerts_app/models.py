@@ -26,7 +26,7 @@ class Concierto(models.Model):
     nombre = models.CharField(max_length=255)
     artista_concierto = models.ForeignKey(Artista, on_delete=models.CASCADE)
     #ubicacion_concierto = models.ForeignKey(Ubicacion, on_delete=models.CASCADE)
-    escenario = models.CharField(max_length=255)
+    escenario = models.CharField(max_length=255 ,null=True, blank=True)
     fecha = models.DateTimeField()
     #precio_entrada = models.DecimalField(max_digits=10, decimal_places=2)
     boletos_disponibles = models.PositiveIntegerField(default=0)

@@ -37,7 +37,6 @@
             {% endfor %}
         </div>
 
-        <a href="{% url 'festival_top_ventas' %}" class="btn btn-primary mt-3"><i class="bi bi-graph-up"></i> Festivales más vendidos</a>
 
         {% if user.is_staff %}
         <h2 class="mt-5 mb-4">(Solo visible para staff) Festivales pasados:</h2>
@@ -62,7 +61,7 @@
             {% endfor %}
         </div>
         <a href="/api" class="btn btn-primary mt-5"><i class="bi bi-code"></i> Visitar la api</a>
-        <a href="{% url 'festival_create' %}" class="btn btn-primary mt-5"><i class="bi bi-plus"></i> Añadir Concierto</a>
+        <a href="{% url 'festival_create' %}" class="btn btn-primary mt-5"><i class="bi bi-plus"></i> Añadir Festival</a>
         <br>
         {% endif %}
     </div>

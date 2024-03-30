@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from datetime import datetime
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     ListView,
@@ -9,14 +10,14 @@ from django.views.generic import (
 )
 # Create your views here.
 from .models import Festival
-from .forms import FestivalFiltroForm
+from .forms import CrearFestivalForm, FestivalFiltroForm
 from typing import Any
 
 # region Conciertos
 # Usuarios normales
 class FestivalListView(ListView):
     model = Festival
-    template_name = "festivales_app/festivales/festival_list.html"
+    template_name = "festivales/festival_list.html"
     form_class = FestivalFiltroForm
     queryset = Festival.objects.all()
 
@@ -68,30 +69,32 @@ class FestivalListView(ListView):
             context["festivalesPasados"] = festivalesPasados
         return context
 
+# Staff
+class FestivalCreateView(CreateView):
+    model = Festival
+    form_class = CrearFestivalForm
+    success_url = reverse_lazy("festival_list")
+    template_name = "festivales/festival_create.html"
+
+    def form_valid(
+        self, form
+    ):  # Se sobreescribe el método para que se pueda modificar el número de boletos disponibles
+        festival = form.save(
+            commit=False
+        )  # Con esto evitamos que se guarde el concierto hasta que se modifique el número de boletos disponibles, pero me lo traigo a la vista para modificarlo
+        festival.boletos_disponibles = festival.ubicacion_festival.capacidad
+        festival.save()
+        return super().form_valid(
+            form
+        )  # Se guarda el concierto 
+
 
 """
 class ConciertoDetailView(DetailView):
     model = Festival
     template_name = "festivales_app/festivales/festival_detail.html"
 
-# Staff
-class ConciertoCreateView(CreateView):
-    model = Concierto
-    form_class = CrearConciertoForm
-    success_url = reverse_lazy("concierto_list")
-    template_name = "concerts_app/conciertos/concierto_create.html"
-
-    def form_valid(
-        self, form
-    ):  # Se sobreescribe el método para que se pueda modificar el número de boletos disponibles
-        concierto = form.save(
-            commit=False
-        )  # Con esto evitamos que se guarde el concierto hasta que se modifique el número de boletos disponibles, pero me lo traigo a la vista para modificarlo
-        concierto.boletos_disponibles = concierto.ubicacion_concierto.capacidad
-        concierto.save()
-        return super().form_valid(
-            form
-        )  # Se guarda el concierto personalizado con el número de boletos disponibles modificado,se llama al método de la clase padre para que guarde el concierto
+personalizado con el número de boletos disponibles modificado,se llama al método de la clase padre para que guarde el concierto
 
 
 class ConciertoDeleteView(DeleteView):
