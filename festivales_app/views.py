@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import (
     CreateView,
     ListView,
@@ -19,7 +20,6 @@ class FestivalListView(ListView):
     model = Festival
     template_name = "festivales/festival_list.html"
     form_class = FestivalFiltroForm
-    queryset = Festival.objects.all()
 
     # queryset = Concierto.objects.filter(fecha__gt=datetime.now())
 
@@ -29,6 +29,11 @@ class FestivalListView(ListView):
             self.request.GET
         )  # Esto es para que nos venga relleno el formulario
         context["form"] = form
+        
+        festivalesFuturos = Festival.objects.filter(fecha__gt=timezone.now())
+        festivalesPasados = Festival.objects.filter(fecha__lt=timezone.now())
+        
+
         if form.is_valid():
             nombre_festival = form.cleaned_data.get("nombre_festival")
             genero_principal = form.cleaned_data.get("genero_principal")
@@ -36,10 +41,9 @@ class FestivalListView(ListView):
             fecha_ascendente = form.cleaned_data.get("fecha_ascendente")
             fecha_descendente = form.cleaned_data.get("fecha_descendente")
             
-            festivalesFuturos = self.queryset.filter(fecha__gt=datetime.now())
-            festivalesPasados = self.queryset.filter(fecha__lt=datetime.now())
+            
 
-            if nombre_festival != "":
+            if nombre_festival:
                 festivalesFuturos = festivalesFuturos.filter(
                     nombre__icontains=nombre_festival
                 )
@@ -47,10 +51,10 @@ class FestivalListView(ListView):
                     nombre__icontains=nombre_festival
                 )
 
-            if genero_principal is not None:
+            if genero_principal:
                 festivalesFuturos = festivalesFuturos.filter(genero_principal=genero_principal)
                 festivalesPasados = festivalesPasados.filter(genero_principal=genero_principal)
-            if ubicacion is not None:
+            if ubicacion:
                 festivalesFuturos = festivalesFuturos.filter(
                     ubicacion_festival=ubicacion
                 )
@@ -67,6 +71,8 @@ class FestivalListView(ListView):
             
             context["festivalesFuturos"] = festivalesFuturos
             context["festivalesPasados"] = festivalesPasados
+            
+        
         return context
 
 # Staff

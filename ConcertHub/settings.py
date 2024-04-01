@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "es-es"
 
-TIME_ZONE = "Europe/Berlin"
+TIME_ZONE = 'Europe/Madrid' 
 
 USE_I18N = True
 
@@ -137,3 +137,13 @@ AUTH_USER_MODEL = "users_app.Usuario"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = reverse_lazy("concierto_list")
+
+# settings.py
+
+# Otros ajustes de configuración...
+
+# Configuración del servidor de desarrollo
+if DEBUG:
+    # Configuración del servidor de desarrollo
+    # Define el puerto que se utilizará para el servidor de desarrollo
+    PORT = 8001

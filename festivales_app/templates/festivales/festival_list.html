@@ -26,10 +26,9 @@
                         <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ festival.fecha }}</p>
                         <p class="card-text text-white mb-1"><i class="bi bi-geo-alt"></i> Ubicación: {{ festival.ubicacion_festival }}</p>
                         <p class="card-text text-white mb-3"><i class="bi bi-cash"></i> Precio: {{ festival.precio_entrada }}€</p>
-                        <a href="{% url 'festival_detail' pk=festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a>
+
                         {% if user.is_staff %}
-                            <a href="{% url 'festival_delete' pk=festival.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
-                            <a href="{% url 'festival_update' pk=festival.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i> Editar</a>
+                           
                         {% endif %}
                     </div>
                 </div>
@@ -41,7 +40,7 @@
         {% if user.is_staff %}
         <h2 class="mt-5 mb-4">(Solo visible para staff) Festivales pasados:</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for festival in festivalesFuturos %}
+            {% for festival in festivalesPasados %}
             <div class="col">
                 <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
                     <img src="{{ festival.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Concierto Image" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
@@ -50,10 +49,10 @@
                         <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ festival.fecha }}</p>
                         <p class="card-text text-white mb-1"><i class="bi bi-geo-alt"></i> Ubicación: {{ festival.ubicacion_festival }}</p>
                         <p class="card-text text-white mb-3"><i class="bi bi-cash"></i> Precio: {{ festival.precio_entrada }}€</p>
-                        <a href="{% url 'festival_detail' pk=festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a>
+
                         {% if user.is_staff %}
-                            <a href="{% url 'festival_delete' pk=festival.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
-                            <a href="{% url 'festival_update' pk=festival.pk %}" class="btn btn-warning"><i class="bi bi-pencil"></i> Editar</a>
+
+                        
                         {% endif %}
                     </div>
                 </div>

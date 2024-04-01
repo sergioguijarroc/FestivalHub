@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 # Create your models here.
@@ -15,6 +16,12 @@ class Festival(models.Model):
     disponibilidad_parking = models.BooleanField(default=False)
     precio_entrada = models.DecimalField(max_digits=10, decimal_places=2)
     genero_principal = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.nombre
+    class Meta:
+        verbose_name_plural = "Festivales"
+        
 class Ubicacion(models.Model):
     nombre = models.CharField(max_length=255)
     direccion = models.TextField()

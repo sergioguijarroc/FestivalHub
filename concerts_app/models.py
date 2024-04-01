@@ -10,6 +10,7 @@ from festivales_app.models import Festival
 
 
 
+
 # Create your models here.
 class Artista(models.Model):
     nombre = models.CharField(max_length=255)

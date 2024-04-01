@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+
 from typing import Any
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
