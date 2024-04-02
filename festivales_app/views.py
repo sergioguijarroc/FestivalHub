@@ -38,8 +38,7 @@ class FestivalListView(ListView):
             nombre_festival = form.cleaned_data.get("nombre_festival")
             genero_principal = form.cleaned_data.get("genero_principal")
             ubicacion = form.cleaned_data.get("ubicacion_festival")
-            fecha_ascendente = form.cleaned_data.get("fecha_ascendente")
-            fecha_descendente = form.cleaned_data.get("fecha_descendente")
+            fecha_orden = form.cleaned_data.get("fecha_orden")
             
             
 
@@ -47,7 +46,7 @@ class FestivalListView(ListView):
                 festivalesFuturos = festivalesFuturos.filter(
                     nombre__icontains=nombre_festival
                 )
-                festivales_pasados = festivalesPasados.filter(
+                festivalesPasados = festivalesPasados.filter(
                     nombre__icontains=nombre_festival
                 )
 
@@ -61,13 +60,13 @@ class FestivalListView(ListView):
                 festivalesPasados = festivalesPasados.filter(
                     ubicacion_festival=ubicacion
                 )
-            if fecha_ascendente:
+            if fecha_orden == "ascendente":
                 festivalesFuturos = festivalesFuturos.order_by("fecha")
                 festivalesPasados = festivalesPasados.order_by("fecha")
-            
-            if fecha_descendente:
+            else:
                 festivalesFuturos = festivalesFuturos.order_by("-fecha")
                 festivalesPasados = festivalesPasados.order_by("-fecha")
+
             
             context["festivalesFuturos"] = festivalesFuturos
             context["festivalesPasados"] = festivalesPasados
