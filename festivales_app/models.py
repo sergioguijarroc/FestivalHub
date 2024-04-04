@@ -32,3 +32,16 @@ class Ubicacion(models.Model):
 
     class Meta:
         verbose_name_plural = "Ubicaciones"
+        
+class Autobus(models.Model):
+    ubicacion_parada = models.CharField(max_length=255)
+    capacidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha_salida = models.DateTimeField()
+    festival_relacionado = models.ForeignKey("Festival", on_delete=models.CASCADE)
+    
+class Parking(models.Model):
+    ubicacion_parking = models.CharField(max_length=255)
+    capacidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    festival_relacionado = models.ForeignKey("Festival", on_delete=models.CASCADE)

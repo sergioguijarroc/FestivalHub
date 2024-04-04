@@ -94,24 +94,19 @@ class FestivalCreateView(CreateView):
         )  # Se guarda el concierto 
 
 
-"""
-class ConciertoDetailView(DetailView):
+
+class FestivalDetailView(DetailView):
     model = Festival
-    template_name = "festivales_app/festivales/festival_detail.html"
+    template_name = "festivales/festival_detail.html"
 
-personalizado con el número de boletos disponibles modificado,se llama al método de la clase padre para que guarde el concierto
-
-
-class ConciertoDeleteView(DeleteView):
-    model = Concierto
-    success_url = reverse_lazy("concierto_list")
-    template_name = "concerts_app/conciertos/concierto_confirm_delete.html"
+class FestivalUpdateView(UpdateView):
+    model = Festival
+    form_class = CrearFestivalForm
+    success_url = reverse_lazy("festival_list")
+    template_name = "festivales/festival_update.html"
 
 
-class ConciertoUpdateView(UpdateView):
-    model = Concierto
-    form_class = CrearConciertoForm
-    success_url = reverse_lazy("concierto_list")
-    template_name = "concerts_app/conciertos/concierto_update.html"
-
-"""
+class FestivalDeleteView(DeleteView):
+    model = Festival
+    success_url = reverse_lazy("festival_list")
+    template_name = "festivales/festival_confirm_delete.html"

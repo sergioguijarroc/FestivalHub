@@ -67,6 +67,7 @@ class ConciertoDeleteView(DeleteView):
     template_name = "concerts_app/conciertos/concierto_confirm_delete.html"
 
 
+
 class ConciertoUpdateView(UpdateView):
     model = Concierto
     form_class = CrearConciertoForm
