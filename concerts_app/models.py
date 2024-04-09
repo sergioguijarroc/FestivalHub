@@ -26,14 +26,10 @@ class Artista(models.Model):
 class Concierto(models.Model):
     nombre = models.CharField(max_length=255)
     artista_concierto = models.ForeignKey(Artista, on_delete=models.CASCADE)
-    #ubicacion_concierto = models.ForeignKey(Ubicacion, on_delete=models.CASCADE)
     escenario = models.CharField(max_length=255 ,null=True, blank=True)
     fecha = models.DateTimeField()
-    #precio_entrada = models.DecimalField(max_digits=10, decimal_places=2)
-    boletos_disponibles = models.PositiveIntegerField(default=0)
     descripcion = models.TextField()
     foto = models.ImageField(upload_to="conciertos")
-    #valoracion_media = models.FloatField(blank=True, null=True, default=None)
     festival_concierto = models.ForeignKey(Festival, on_delete=models.SET_NULL, related_name="conciertos", null=True, blank=True)  #Con el related_name="conciertos" se puede acceder a los conciertos de un festival con festival.conciertos.all()
 
 

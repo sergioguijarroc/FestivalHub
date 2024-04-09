@@ -32,7 +32,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("concierto_list")
+            return redirect("festival_list")
     else:
         form = RegisterForm()
     return render(request, "users_app/register.html", {"form": form})
