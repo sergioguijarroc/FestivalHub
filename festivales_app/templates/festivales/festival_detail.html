@@ -33,6 +33,7 @@
                     {% if user.is_staff %}
                         <br>
                         <li><a href="{% url 'festival_update' festival.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i> Editar festival</a></li>
+                        <br>
                         <li><a href="{% url 'festival_delete' festival.pk %}" class="btn btn-danger"><i class="bi bi-trash"></i> Eliminar festival</a></li>
                     {% endif %}
                 </ul>
