@@ -13,6 +13,7 @@
             {{ form.as_p }}
             
             <input type="submit" value="Filtrar" class="btn btn-primary mt-3 ">
+            <button type="button" class="btn btn-secondary mt-3" onclick="limpiarFiltros()" >Limpiar filtros</button>
 
         </form>
         <h2 class="mt-5 mb-4">Próximos Festivales:</h2>
@@ -65,4 +66,23 @@
         {% endif %}
     </div>
 </div>
+
+<script>
+    function limpiarFiltros() {
+        let inputs = document.getElementsByTagName('input');
+        let selects = document.getElementsByTagName('select');
+
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].type !== 'submit' && inputs[i].type !== 'reset') {
+                inputs[i].value = '';
+            }
+        }
+        for (let i = 0; i < selects.length; i++) {
+            selects[i].selectedIndex = 0;
+        }
+
+        document.forms[0].submit();
+    }
+</script>
+
 {% endblock %}

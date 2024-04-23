@@ -49,15 +49,3 @@ class Concierto(models.Model):
     def __str__(self):
         return f"{self.nombre} - {self.artista_concierto} - {self.fecha}"
 
-"""
-class Notificacion(models.Model):
-    cliente_notificacion = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    mensaje = models.TextField()
-
-    def __str__(self):
-        return f"Notificación para {self.cliente_notificacion}: {self.mensaje}"
-
-    class Meta:
-        verbose_name_plural = "Notificaciones"
-"""
-
