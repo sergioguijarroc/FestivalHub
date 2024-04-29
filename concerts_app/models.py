@@ -2,7 +2,6 @@ from typing import Any
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
-from tickets_app.models import Valoracion
 from users_app.models import Cliente
 from django.db.models import Avg
 from django.apps import apps

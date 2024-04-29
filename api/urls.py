@@ -1,4 +1,4 @@
-from rest_framework import routers
+""" from rest_framework import routers
 from .views import ConciertoViewSet
 
 
@@ -7,3 +7,4 @@ router = routers.DefaultRouter()
 router.register("conciertos", ConciertoViewSet, "producto_api")
 
 urlpatterns = router.urls
+ """

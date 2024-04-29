@@ -2,14 +2,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView
-from .forms import ReservaForm
-from concerts_app.models import Concierto
+from .forms import ReservaFestivalForm,ReservaAutobusForm
 from festivales_app.models import Autobus
-from .models import Reserva
+from .models import ReservaAutobus, ReservaFestival
 
 # Create your views here.
 
-
+""" 
 class ComprarEntradas(View):  # Hay que meterle que esté logueado
     def get(self, request, pk):
         concierto = get_object_or_404(Concierto, pk=pk)
@@ -78,12 +77,12 @@ class ConfirmacionCompra(View):
                 cantidad_tickets=unidades,
                 importe=importe,
             )
-        return redirect("listar_reservas_usuario")
+        return redirect("listar_reservas_usuario") """
 
 class ComprarEntradasBus(View):
     def get(self, request, pk):
         autobus = get_object_or_404(Autobus, pk=pk)
-        formulario = ReservaBusForm()
+        formulario = ReservaAutobusForm()
         return render(
             request,
             "tickets_app/comprar_entradas_bus.html",
@@ -91,7 +90,7 @@ class ComprarEntradasBus(View):
         )
 
     def post(self, request, pk):
-        formulario = ReservaBusForm(request.POST)
+        formulario = ReservaAutobusForm(request.POST)
         if formulario.is_valid():
             autobus = get_object_or_404(Autobus, pk=pk)
             unidades = formulario.cleaned_data["cantidad_tickets"]
@@ -106,3 +105,38 @@ class ComprarEntradasBus(View):
             {"autobus": autobus, "formulario": formulario},
         )
     
+class ConfirmacionCompraBus(View):
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        autobus = get_object_or_404(Autobus, pk=pk)
+        unidades = kwargs.get("unidades", None)
+        usuario = request.user
+        importe = autobus.precio * unidades
+
+        return render(
+            request,
+            "tickets_app/confirmacion_compra_bus.html",
+            {
+                "autobus": autobus,
+                "unidades": unidades,
+                "usuario": usuario,
+                "importe": importe,
+            },
+        )
+
+    def post(self, **kwargs):
+        pk = kwargs.get("pk", None)
+        autobus = get_object_or_404(Autobus, pk=pk)
+        unidades = kwargs.get("unidades", None)
+        usuario = self.request.user
+        importe = autobus.precio * unidades
+
+        autobus.plazas_disponibles -= unidades
+        autobus.save()
+        ReservaAutobus.objects.create(
+            autobus_reserva=autobus,
+            cliente_reserva=usuario,
+            cantidad_tickets=unidades,
+            importe=importe,
+        )
+        return redirect("listar_reservas_usuario")

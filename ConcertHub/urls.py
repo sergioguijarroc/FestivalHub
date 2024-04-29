@@ -27,5 +27,5 @@ urlpatterns = [
     ),  # URLs de la aplicación tickets_app
     path("user/", include("users_app.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("api/", include("api.urls", namespace="api")),
+    # path("api/", include("api.urls", namespace="api")),
 ]

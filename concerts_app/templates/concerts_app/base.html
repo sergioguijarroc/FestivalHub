@@ -21,7 +21,7 @@
     <nav class="navbar bg-black navbar-dark navbar-expand-lg mb-5">
         <div class="container-fluid">
             <a class="navbar-brand" href="{%url 'festival_list'%}">FestivalHub</a>
-            <a href="{%url 'artista_list'%}" class="btn btn-outline-light">Todos nuestros artistas</a>
+            
             {%if user.is_authenticated%}
             <a href="{%url 'listar_reservas_usuario' %}" class="btn btn-outline-light">Mis Reservas</a>
             <a href="{%url 'logout' %}" class="btn btn-outline-light">Cerrar Sesión</a>

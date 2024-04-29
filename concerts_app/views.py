@@ -16,7 +16,6 @@ from django.views.generic import (
 )
 from .models import Concierto, Artista
 from .forms import ArtistaForm, CrearConciertoForm
-from tickets_app.models import Reserva, Valoracion
 from django.db.models import Sum
 from festivales_app.models import Festival
 
