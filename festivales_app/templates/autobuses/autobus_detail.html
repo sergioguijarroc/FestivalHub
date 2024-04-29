@@ -1,0 +1,22 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Detalles del Autobús para el Festival {{ festival.nombre }}
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title"><i class="bi bi-bus"></i> Detalles del Autobús</h2>
+                <ul class="list-unstyled">
+                    <li><strong><i class="bi bi-geo-alt"></i> Ubicación de la parada:</strong> {{ autobus.ubicacion_parada }}</li>
+                    <li><strong><i class="bi bi-people"></i> Capacidad:</strong> {{ autobus.capacidad }}</li>
+                    <li><strong><i class="bi bi-cash"></i> Precio:</strong> {{ autobus.precio }}€</li>
+                    <li><strong><i class="bi bi-calendar"></i> Fecha de salida:</strong> {{ autobus.fecha_salida }}</li>
+                </ul>
+                <a href="{% url 'festival_detail' festival.pk %}" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver al Festival</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

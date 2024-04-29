@@ -40,8 +40,19 @@ class Autobus(models.Model):
     fecha_salida = models.DateTimeField()
     festival_relacionado = models.ForeignKey("Festival", on_delete=models.CASCADE)
     
+    def __str__(self):
+        return f"Autobús del festival {self.festival_relacionado.nombre} con salida desde {self.ubicacion_parada}"
+
+    class Meta:
+        verbose_name_plural = "Autobuses"
+    
 class Parking(models.Model):
     ubicacion_parking = models.CharField(max_length=255)
     capacidad = models.PositiveIntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     festival_relacionado = models.ForeignKey("Festival", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Parking del festival {self.festival_relacionado.nombre} con ubicación en {self.ubicacion_parada}"
+    class Meta:
+        verbose_name_plural = "Parkings"

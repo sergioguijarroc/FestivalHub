@@ -4,6 +4,7 @@ from django.views import View
 from django.views.generic import DetailView
 from .forms import ReservaForm
 from concerts_app.models import Concierto
+from festivales_app.models import Autobus
 from .models import Reserva
 
 # Create your views here.
@@ -78,3 +79,30 @@ class ConfirmacionCompra(View):
                 importe=importe,
             )
         return redirect("listar_reservas_usuario")
+
+class ComprarEntradasBus(View):
+    def get(self, request, pk):
+        autobus = get_object_or_404(Autobus, pk=pk)
+        formulario = ReservaBusForm()
+        return render(
+            request,
+            "tickets_app/comprar_entradas_bus.html",
+            {"autobus": autobus, "formulario": formulario},
+        )
+
+    def post(self, request, pk):
+        formulario = ReservaBusForm(request.POST)
+        if formulario.is_valid():
+            autobus = get_object_or_404(Autobus, pk=pk)
+            unidades = formulario.cleaned_data["cantidad_tickets"]
+            return redirect(
+                "confirmar_compra_bus",
+                pk,  # Le paso la pk del autobus para recogerla luego en ConfirmaciónCompra
+                unidades,
+            )
+        return render(
+            request,
+            "tickets_app/comprar_entradas_bus.html",
+            {"autobus": autobus, "formulario": formulario},
+        )
+    

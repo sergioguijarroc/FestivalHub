@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from datetime import datetime
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views import View
 from django.views.generic import (
     CreateView,
     ListView,
@@ -10,9 +11,10 @@ from django.views.generic import (
     DeleteView,
 )
 # Create your views here.
-from .models import Festival
-from .forms import CrearFestivalForm, FestivalFiltroForm
+from .models import Festival,Autobus
+from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm
 from typing import Any
+
 
 # region Conciertos
 # Usuarios normales
@@ -93,8 +95,6 @@ class FestivalCreateView(CreateView):
             form
         )  # Se guarda el concierto 
 
-
-
 class FestivalDetailView(DetailView):
     model = Festival
     template_name = "festivales/festival_detail.html"
@@ -110,3 +110,23 @@ class FestivalDeleteView(DeleteView):
     model = Festival
     success_url = reverse_lazy("festival_list")
     template_name = "festivales/festival_confirm_delete.html"
+
+class AutobusListView(View):
+    template_name = "autobuses/autobus_list.html"
+    
+    def get(self, request, festival_pk):
+        festival = get_object_or_404(Festival, pk=festival_pk)
+        autobuses = Autobus.objects.filter(festival_relacionado=festival)
+        return render(request, self.template_name, {"autobuses": autobuses, "festival": festival})
+class AutobusCreateView(CreateView):
+    model = Autobus
+    form_class = CrearAutobusForm
+    template_name = "autobuses/autobus_create.html"
+    success_url = reverse_lazy("festival_list")
+    
+    def form_valid(self,form):
+        festival_pk = self.kwargs['festival_pk']
+        festival = get_object_or_404(Festival, pk=festival_pk)
+        form.instance.festival_relacionado = festival
+        return super().form_valid(form)
+    

@@ -15,7 +15,11 @@
                     <li><strong><i class="bi bi-geo-alt"></i> Ubicación:</strong> {{ festival.ubicacion_festival }}</li>
                     <li><strong><i class="bi bi-music-note-list"></i> Género principal:</strong> {{ festival.genero_principal }}</li>
                     <li><strong><i class="bi bi-justify"></i> Descripción:</strong> {{ festival.descripcion }}</li>
-                    <li><strong><i class="bi bi-bus"></i> Disponibilidad de autobuses:</strong> {{ festival.disponibilidad_autobuses|yesno:"Sí,No" }}</li>
+                    <li><strong><i class="bi bi-bus"></i> Disponibilidad de autobuses:</strong> {{ festival.disponibilidad_autobuses|yesno:"Sí,No" }}
+                    {%if festival.disponibilidad_autobuses%}
+                        <a href="{% url 'autobus_list' festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Ver detalles de autobuses</a>
+                    {%endif%}
+                    </li>
                     <li><strong><i class="bi bi-parking"></i> Disponibilidad de parking:</strong> {{ festival.disponibilidad_parking|yesno:"Sí,No"}}</li>
 
                     {% if festival.valoracion_media %}
@@ -31,6 +35,10 @@
                         <li><em><i class="bi bi-exclamation-triangle"></i> Entradas agotadas...</em></li>
                     {% endif %}
                     {% if user.is_staff %}
+                    {% if festival.disponibilidad_autobuses %}
+                    <li><a href="{% url 'autobus_create' festival.pk %}" class="btn btn-primary"><i class="bi bi-plus"></i> Añadir autobús</a></li>
+                    {% endif %}
+                   
                         <br>
                         <li><a href="{% url 'festival_update' festival.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i> Editar festival</a></li>
                         <br>

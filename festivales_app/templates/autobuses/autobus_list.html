@@ -1,0 +1,45 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+Lista de Autobuses
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="text-center mb-5">Lista de Autobuses del Festival "{{ festival.nombre }}"</h1>
+        <div class="row">
+            <div class="card col-6 mx-auto">
+                <div class="card-body">
+                    <h2 class="card-title">Autobuses Disponibles</h2>
+                    {% if autobuses %}
+                    <div class="list-group">
+                        {% for autobus in autobuses %}
+                        <a href="{% url 'autobus_detail' autobus.pk %}" class="list-group-item list-group-item-action">
+                            <h5 class="mb-1">{{ autobus.ubicacion_parada }}</h5>
+                            <p class="mb-1">Capacidad: {{ autobus.capacidad }}</p>
+                            <p class="mb-1">Precio: {{ autobus.precio }}€</p>
+                            <p class="mb-1">Fecha de salida: {{ autobus.fecha_salida }}</p>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>No hay autobuses disponibles aún para este festival pero los habrá. ¡Vuelve más adelante!</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {%if user.is_staff%}
+        <div class="row">
+            <div class="card col-6 mx-auto pb-4">
+                <a href="{% url 'autobus_create' festival.pk %}" class="btn btn-primary mt-4"><i class="bi bi-plus"></i>
+                    Añadir Autobús</a>
+                <a href="{% url 'festival_detail' festival.pk %}" class="btn btn-secondary mt-4"><i
+                        class="bi bi-arrow-left"></i> Volver al Festival</a>
+            </div>
+        </div>
+        {%endif%}
+
+    </div>
+</div>
+{% endblock %}
