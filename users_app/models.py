@@ -30,3 +30,5 @@ class Staff(Usuario):
 
     class Meta:
         verbose_name_plural = "Staffs"
+        
+

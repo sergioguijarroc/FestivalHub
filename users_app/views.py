@@ -13,18 +13,20 @@ from tickets_app.models import ReservaFestival
 # Create your views here.
 
 
-class ListarReservasUsuario(View):
+class ListarReservasFestivalUsuario(View):
     def get(self, request):
         reservas = ReservaFestival.objects.filter(cliente_reserva=self.request.user)
         # fecha_actual = datetime.now()
         fecha_actual = timezone.now()
         return render(
             request,
-            "users_app/concierto_usuario_list.html",
+            "users_app/festival_usuario_list.html",
             {"reservas": reservas, "fecha_actual": fecha_actual},
         )
         
-
+class ListarReservasUsuario(View):
+    def get(self,request):
+        return render(request,"users_app/reservas_usuario.html")
 
 
 def register(request):

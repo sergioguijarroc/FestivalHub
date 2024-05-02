@@ -77,23 +77,18 @@ class FestivalListView(ListView):
         return context
 
 # Staff
+
 class FestivalCreateView(CreateView):
     model = Festival
-    form_class = CrearFestivalForm
+    form_class = CrearFestivalForm  # Utiliza el formulario de creación de festival
     success_url = reverse_lazy("festival_list")
     template_name = "festivales/festival_create.html"
 
-    def form_valid(
-        self, form
-    ):  # Se sobreescribe el método para que se pueda modificar el número de boletos disponibles
-        festival = form.save(
-            commit=False
-        )  # Con esto evitamos que se guarde el concierto hasta que se modifique el número de boletos disponibles, pero me lo traigo a la vista para modificarlo
+    def form_valid(self, form):
+        festival = form.save(commit=False)
         festival.boletos_disponibles = festival.ubicacion_festival.capacidad
         festival.save()
-        return super().form_valid(
-            form
-        )  # Se guarda el concierto 
+        return super().form_valid(form)
 
 class FestivalDetailView(DetailView):
     model = Festival
@@ -130,3 +125,34 @@ class AutobusCreateView(CreateView):
         form.instance.festival_relacionado = festival
         return super().form_valid(form)
     
+class FestivalesConAutobusesListView(ListView):
+    model = Festival
+    template_name = "festivales/festival_list_con_autobuses.html"
+    form_class = FestivalFiltroForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = self.form_class(self.request.GET)
+        context["form"] = form
+        
+        festivales_con_bus = Festival.objects.filter(disponibilidad_autobuses=True)
+        
+        if form.is_valid():
+            nombre_festival = form.cleaned_data.get("nombre_festival")
+            ubicacion = form.cleaned_data.get("ubicacion_festival")
+            fecha_orden = form.cleaned_data.get("fecha_orden")
+            
+            if nombre_festival:
+                festivales_con_bus = festivales_con_bus.filter(nombre__icontains=nombre_festival)
+
+            if ubicacion:
+                festivales_con_bus = festivales_con_bus.filter(ubicacion_festival=ubicacion)
+
+            if fecha_orden == "ascendente":
+                festivales_con_bus = festivales_con_bus.order_by("fecha")
+            else:
+                festivales_con_bus = festivales_con_bus.order_by("-fecha")
+
+            context["festivales_con_bus"] = festivales_con_bus
+            
+        return context

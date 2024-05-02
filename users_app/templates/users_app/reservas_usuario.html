@@ -1,0 +1,41 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+Lista de Reservas del usuario
+{% endblock %}
+{% block content %}
+<div class="row gap-5 text-center justify-content-center">
+    <a href="{% url 'listar_reservas_festival_usuario' %}" class="card col-sm-12 col-md-4">
+        <div>
+            <p class="heading">
+                Reservas de festivales
+            </p>
+            <p>
+                Click aquí
+            </p>
+            <p><i class="bi bi-music-note-beamed"></i></p>
+        </div>
+    </a>
+    <a href="" class="card col-sm-12 col-md-4">
+        <div>
+            <p class="heading">
+                Reservas de autobuses
+            </p>
+            <p>
+                Click aquí
+            </p>
+            <p><i class="bi bi-bus-front"></i></p>
+        </div>
+    </a>
+    <a href="" class="card col-sm-12 col-md-4">
+        <div>
+            <p class="heading">
+                Reservas de parking
+            </p>
+            <p>
+                Click aquí
+            </p>
+            <p><i class="bi bi-p-square-fill"></i></p>
+        </div>
+    </a>
+</div>
+{% endblock %}

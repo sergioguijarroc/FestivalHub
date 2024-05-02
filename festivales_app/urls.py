@@ -12,6 +12,7 @@ from .views import (
     FestivalDeleteView,
     AutobusCreateView,
     AutobusListView,
+    FestivalesConAutobusesListView,
 )
 
 from django.contrib.admin.views.decorators import staff_member_required
@@ -23,6 +24,7 @@ urlpatterns = [
     path("<int:pk>/", FestivalDetailView.as_view(), name="festival_detail"),
     path("update/<int:pk>", staff_member_required(FestivalUpdateView.as_view()), name="festival_update"),
     path("delete/<int:pk>", staff_member_required(FestivalDeleteView.as_view()), name="festival_delete"),
+    path("list_con_autobuses/", FestivalesConAutobusesListView.as_view(), name="festival_list_con_autobuses"),
     #Autobuses
     
     path("autobus/create/<int:festival_pk>/", AutobusCreateView.as_view(), name="autobus_create"),
