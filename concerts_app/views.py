@@ -18,6 +18,7 @@ from .models import Concierto, Artista
 from .forms import ArtistaForm, CrearConciertoForm
 from django.db.models import Sum
 from festivales_app.models import Festival
+from django.forms import inlineformset_factory
 
 # Create your views here.
 
@@ -41,25 +42,50 @@ class ConciertoDetailView(DetailView):
 
 
 # Staff
-class ConciertoCreateView(CreateView):
+""" class ConciertoCreateView(CreateView):
     model = Concierto
     form_class = CrearConciertoForm
-    success_url = reverse_lazy("concierto_list")
     template_name = "concerts_app/conciertos/concierto_create.html"
 
-    def form_valid(
-        self, form
-    ):  # Se sobreescribe el método para que se pueda modificar el número de boletos disponibles
-        concierto = form.save(
-            commit=False
-        )  # Con esto evitamos que se guarde el concierto hasta que se modifique el número de boletos disponibles, pero me lo traigo a la vista para modificarlo
-        concierto.boletos_disponibles = concierto.ubicacion_concierto.capacidad
-        concierto.save()
-        return super().form_valid(
-            form
-        )  # Se guarda el concierto personalizado con el número de boletos disponibles modificado,se llama al método de la clase padre para que guarde el concierto
+
+    def form_valid(self,form):
+        festival_pk = self.kwargs['festival_pk']
+        festival = get_object_or_404(Festival, pk=festival_pk)
+        form.instance.festival_relacionado = festival
+        return super().form_valid(form) """
 
 
+class ConciertoCreateView(View):
+    template_name = 'concerts_app/conciertos/crear_concierto.html'
+
+    def get(self, request, festival_pk):
+        concierto_form = CrearConciertoForm()
+        artista_form = ArtistaForm()
+        return render(request, self.template_name, {'concierto_form': concierto_form, 'artista_form': artista_form})
+
+    def post(self, request, festival_pk):
+        concierto_form = CrearConciertoForm(request.POST, request.FILES)
+        artista_form = ArtistaForm(request.POST, request.FILES)
+
+        if concierto_form.is_valid() and artista_form.is_valid():
+            festival = get_object_or_404(Festival, pk=festival_pk)
+            
+            # Guardar el concierto
+            concierto = concierto_form.save(commit=False)
+            concierto.festival_relacionado = festival
+            concierto.save()
+            
+
+            # Guardar el artista
+            artista = artista_form.save(commit=False)
+            
+            artista.save()
+            Concierto.objects.filter(pk=concierto.pk).update(artista_concierto=artista)
+            Artista.objects.filter(pk=artista.pk).update(concierto_relacionado=concierto)
+            
+            return redirect('festival_list')
+        else:
+            return render(request, self.template_name, {'concierto_form': concierto_form, 'artista_form': artista_form})
 class ConciertoDeleteView(DeleteView):
     model = Concierto
     success_url = reverse_lazy("concierto_list")

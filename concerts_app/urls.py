@@ -25,7 +25,7 @@ urlpatterns = [
     path("list/", ListarConciertosFestival.as_view(), name="concierto_list"),
     path("detail/<int:pk>", ConciertoDetailView.as_view(), name="concierto_detail"),
     path(
-        "create/",
+        "create/<int:festival_pk>",
         staff_member_required(ConciertoCreateView.as_view()),
         name="concierto_create",
     ),

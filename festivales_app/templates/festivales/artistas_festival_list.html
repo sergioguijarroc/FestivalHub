@@ -1,0 +1,28 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Lista de Artistas del Festival
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1 class="text-center mb-5 text-white">Artistas del Festival {{ festival.nombre }}</h1>
+
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for artista in artistas %}
+            <div class="col">
+                <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
+                    <img src="{{ artista.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Artista Image" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-white">{{ artista.nombre }}</h5>
+                        <p class="card-text text-white mb-1"><strong>Género:</strong> {{ artista.genero }}</p>
+                        <p class="card-text text-white mb-3"><strong>Descripción:</strong> {{ artista.descripcion }}</p>
+                        <a href="#" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles del Artista</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

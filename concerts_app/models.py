@@ -16,6 +16,7 @@ class Artista(models.Model):
     genero = models.CharField(max_length=100)
     descripcion = models.TextField()
     foto = models.ImageField(upload_to="artistas")
+    concierto_relacionado = models.ForeignKey("Concierto", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -24,26 +25,12 @@ class Artista(models.Model):
 
 class Concierto(models.Model):
     nombre = models.CharField(max_length=255)
-    artista_concierto = models.ForeignKey(Artista, on_delete=models.CASCADE)
+    artista_concierto = models.ForeignKey(Artista, on_delete=models.CASCADE,null=True, blank=True)
     escenario = models.CharField(max_length=255 ,null=True, blank=True)
     fecha = models.DateTimeField()
     descripcion = models.TextField()
     foto = models.ImageField(upload_to="conciertos")
-    festival_concierto = models.ForeignKey(Festival, on_delete=models.SET_NULL, related_name="conciertos", null=True, blank=True)  #Con el related_name="conciertos" se puede acceder a los conciertos de un festival con festival.conciertos.all()
-
-
-    def actualizar_valoracion_media(self):
-        # Obtengo todas las valoraciones asociadas al concierto
-        reviews = Valoracion.objects.filter(reserva_valoracion__concierto_reserva=self)
-
-        # Calculo el promedio de las valoraciones
-        avg_rating = reviews.aggregate(Avg("rating"))["rating__avg"]
-        # Actualizo la valoración media del concierto
-        if avg_rating is not None:
-            self.valoracion_media = avg_rating
-
-        # Guardo el concierto actualizado
-        self.save()
+    festival_relacionado = models.ForeignKey(Festival, on_delete=models.SET_NULL, related_name="conciertos", null=True, blank=True)  #Con el related_name="conciertos" se puede acceder a los conciertos de un festival con festival.conciertos.all()
 
     def __str__(self):
         return f"{self.nombre} - {self.artista_concierto} - {self.fecha}"

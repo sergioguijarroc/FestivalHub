@@ -15,6 +15,8 @@ from .models import Festival,Autobus, Parking
 from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm, FestivalNombreFiltroForm,CrearParkingForm
 from typing import Any
 
+from concerts_app.models import Artista, Concierto
+
 
 # region Conciertos
 # Usuarios normales
@@ -92,6 +94,13 @@ class FestivalDetailView(DetailView):
     model = Festival
     template_name = "festivales/festival_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        festival = self.object
+        conciertos = Concierto.objects.filter(festival_relacionado=festival)
+        context['conciertos'] = conciertos.exists()  #Esto es únicamente para poner el lineup en la plantilla
+        return context
+
 class FestivalUpdateView(UpdateView):
     model = Festival
     form_class = CrearFestivalForm
@@ -125,7 +134,6 @@ class AutobusCreateView(CreateView):
         form.instance.festival_relacionado = festival
         festival.save()
         return super().form_valid(form)
-    
 
 class ParkingCreateView(CreateView):
     model = Parking
@@ -193,3 +201,12 @@ class FestivalConParkingListView(ListView):
             context["festivales_con_parking"] = festivales_con_parking
             
         return context
+    
+
+class ArtistasFestivalListView(View):
+    template_name = "festivales/artistas_festival_list.html"
+    
+    def get(self, request, festival_pk):
+        festival = get_object_or_404(Festival, pk=festival_pk)
+        artistas = Artista.objects.filter(concierto__festival_concierto=festival).distinct()
+        return render(request, self.template_name, {"artistas": artistas, "festival": festival})
