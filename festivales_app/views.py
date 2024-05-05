@@ -11,8 +11,8 @@ from django.views.generic import (
     DeleteView,
 )
 # Create your views here.
-from .models import Festival,Autobus
-from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm, FestivalNombreFiltroForm
+from .models import Festival,Autobus, Parking
+from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm, FestivalNombreFiltroForm,CrearParkingForm
 from typing import Any
 
 
@@ -34,7 +34,6 @@ class FestivalListView(ListView):
         
         festivalesFuturos = Festival.objects.filter(fecha__gt=timezone.now())
         festivalesPasados = Festival.objects.filter(fecha__lt=timezone.now())
-        
 
         if form.is_valid():
             nombre_festival = form.cleaned_data.get("nombre_festival")
@@ -43,7 +42,6 @@ class FestivalListView(ListView):
             fecha_orden = form.cleaned_data.get("fecha_orden")
             
             
-
             if nombre_festival:
                 festivalesFuturos = festivalesFuturos.filter(
                     nombre__icontains=nombre_festival
@@ -128,7 +126,29 @@ class AutobusCreateView(CreateView):
         festival.save()
         return super().form_valid(form)
     
+
+class ParkingCreateView(CreateView):
+    model = Parking
+    form_class = CrearParkingForm
+    template_name = "parkings/parking_create.html"
+    success_url = reverse_lazy("festival_list")
     
+    def form_valid(self,form):
+        parking = form.save(commit=False)
+        parking.plazas_disponibles = parking.capacidad
+        festival_pk = self.kwargs['festival_pk']
+        festival = get_object_or_404(Festival, pk=festival_pk)
+        form.instance.festival_relacionado = festival
+        festival.save()
+        return super().form_valid(form)
+
+class ParkingListView(View):
+    template_name = "parkings/parking_list.html"
+    
+    def get(self, request, festival_pk):
+        festival = get_object_or_404(Festival, pk=festival_pk)
+        parkings = Parking.objects.filter(festival_relacionado=festival)
+        return render(request, self.template_name, {"parkings": parkings, "festival": festival})
     
 class FestivalesConAutobusesListView(ListView):
     model = Festival

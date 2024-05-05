@@ -55,6 +55,6 @@ class Parking(models.Model):
     plazas_disponibles = models.PositiveIntegerField()
     
     def __str__(self):
-        return f"Parking del festival {self.festival_relacionado.nombre} con ubicación en {self.ubicacion_parada}"
+        return f"Parking del festival {self.festival_relacionado.nombre} con ubicación en {self.ubicacion_parking}"
     class Meta:
         verbose_name_plural = "Parkings"

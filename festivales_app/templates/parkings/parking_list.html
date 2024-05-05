@@ -6,21 +6,18 @@ Lista de Autobuses
 {% block content %}
 <div class="row">
     <div class="col">
-        <h1 class="text-center mb-5">Lista de Autobuses del Festival "{{ festival.nombre }}"</h1>
+        <h1 class="text-center mb-5">Lista de Parkings del Festival "{{ festival.nombre }}"</h1>
         <div class="row">
             <div class="card col-6 mx-auto">
                 <div class="card-body">
-
-                    {% if autobuses %}
-                    <h2 class="card-title">Autobuses Disponibles</h2>
+                    {% if parkings %}
+                    <h2 class="card-title">Parkings Disponibles</h2>
                     <div class="list-group">
-                        {% for autobus in autobuses %}
-                            <h5 class="mb-1">{{ autobus.ubicacion_parada }}</h5>
-                            <p class="mb-1">Capacidad: {{ autobus.plazas_disponibles }}</p>
-                            <p class="mb-1">Precio: {{ autobus.precio }}€</p>
-                            <p class="mb-1">Fecha de salida: {{ autobus.fecha_salida }}</p>
-                            <a href="{% url 'reservar_plaza_bus' autobus.pk %}" class="btn btn-primary">Reservar plaza en
-                                este autobús
+                        {% for parking in parkings %}
+                            <h5 class="mb-1">{{ parking.ubicacion_parking }}</h5>
+                            <p class="mb-1">Capacidad: {{ parking.plazas_disponibles }}</p>
+                            <p class="mb-1">Precio: {{ parking.precio }}€</p>
+                            <a href="{% url 'reservar_plaza_parking' parking.pk %}" class="btn btn-primary">Reservar plaza en este parking
                         </a>
                         {% endfor %}
                     </div>

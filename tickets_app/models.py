@@ -41,6 +41,24 @@ class ReservaAutobus(models.Model):
         return f"{self.cliente_reserva} - {self.autobus_reserva} - {self.cantidad_tickets}"
     class Meta:
         verbose_name_plural = "Reservas de Autobuses"
+        
+class ReservaParking(models.Model):
+    parking_reserva = models.ForeignKey(
+        "festivales_app.Parking", on_delete=models.CASCADE
+    )
+    cliente_reserva = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    cantidad_tickets = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(5),
+        ]  # Como máximo puede comprar 5 boletos
+    )
+    importe = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.cliente_reserva} - {self.parking_reserva} - {self.cantidad_tickets}"
+    class Meta:
+        verbose_name_plural = "Reservas de Parkings"
 
 """ class Reserva(models.Model):
     concierto_reserva = models.ForeignKey(

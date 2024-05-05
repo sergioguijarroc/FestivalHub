@@ -21,7 +21,9 @@
                     {%endif%}
                     </li>
                     <li><strong><i class="bi bi-parking"></i> Disponibilidad de parking:</strong> {{ festival.disponibilidad_parking|yesno:"Sí,No"}}</li>
-
+                    {%if festival.disponibilidad_parking%}
+                        <a href="{% url 'parking_list' festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Ver detalles de parkings</a>
+                    {%endif%}
                     {% if festival.valoracion_media %}
                         <li><strong><i class="bi bi-star-fill"></i> Valoración:</strong> {{ festival.valoracion_media }}</li>
                     {% endif %}
@@ -37,6 +39,9 @@
                     {% if festival.disponibilidad_autobuses %}
                     <li><a href="{% url 'autobus_create' festival.pk %}" class="btn btn-primary"><i class="bi bi-plus"></i> Añadir autobús</a></li>
                     {% endif %}
+                    {%if festival.disponibilidad_parking%}
+                    <li><a href="{% url 'parking_create' festival.pk %}" class="btn btn-primary"><i class="bi bi-plus"></i> Añadir parking</a></li>
+                    {%endif%}
                    
                         <br>
                         <li><a href="{% url 'festival_update' festival.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i> Editar festival</a></li>

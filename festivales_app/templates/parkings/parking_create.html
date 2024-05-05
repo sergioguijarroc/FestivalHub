@@ -1,0 +1,20 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Crear Parking
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Crear Parking</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-primary" value="Crear">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

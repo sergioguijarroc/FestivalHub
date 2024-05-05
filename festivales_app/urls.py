@@ -14,6 +14,8 @@ from .views import (
     AutobusListView,
     FestivalesConAutobusesListView,
     FestivalConParkingListView,
+    ParkingCreateView,
+    ParkingListView,
 )
 
 from django.contrib.admin.views.decorators import staff_member_required
@@ -30,6 +32,9 @@ urlpatterns = [
     #Autobuses
     path("autobus/create/<int:festival_pk>/", AutobusCreateView.as_view(), name="autobus_create"),
     path("autobus/list/<int:festival_pk>/", AutobusListView.as_view(), name="autobus_list"),
+    #Parkings
+    path("parking/create/<int:festival_pk>/", ParkingCreateView.as_view(), name="parking_create"),
+    path("parking/list/<int:festival_pk>/", ParkingListView.as_view(), name="parking_list"),
     
     
     

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Festival, Ubicacion, Autobus
+from .models import Festival, Parking, Ubicacion, Autobus
 
 
 class FestivalFiltroForm(forms.Form):
@@ -97,7 +97,24 @@ class CrearAutobusForm(forms.ModelForm):
             "fecha_salida": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
         }
     
-    
+class CrearParkingForm(forms.ModelForm):
+    class Meta:
+        model = Parking
+        fields = [
+            "ubicacion_parking",
+            "capacidad",
+            "precio",
+        ]
+        labels = {
+            "ubicacion_parking": "Ubicación del parking",
+            "capacidad": "Capacidad",
+            "precio": "Precio",
+        }
+        widgets = {
+            "ubicacion_parking": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ubicación del parking"}),
+            "capacidad": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Capacidad"}),
+            "precio": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Precio"}),
+        }
 
 
 class FestivalNombreFiltroForm(forms.Form):

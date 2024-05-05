@@ -1,0 +1,20 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Confirmación de Compra
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{ unidades }} plazas para el parking ubicado en {{ parking.ubicacion_parking}} del festival {{ parking.festival_relacionado }}</h2>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <p class="card-text">Vas a comprar {{ unidades }} por un valor de {{ importe }}, ¿Estás seguro?</p>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Confirmar Compra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

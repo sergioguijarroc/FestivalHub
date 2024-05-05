@@ -7,9 +7,10 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title">Reserva tu plaza para el autobús con destino a {{ autobus.festival_relacionado }} por {{ autobus.precio }}€</h2>
-                <p class="card-text">Plazas disponibles: {{ autobus.plazas_disponibles }}</p>
-                <p class="card-text">Recuerda que como máximo puedes comprar solo 5 tickets por compra</p>
+                <h2 class="card-title">Reserva tu plaza para el parking del festival {{ parking.festival_relacionado }} ubicado en {{ parking.ubicacion_parking }}</h2>
+                <p class="card-text">Precio: {{ parking.precio }}€</p>
+                <p class="card-text">Plazas disponibles: {{ parking.plazas_disponibles }}</p>
+                <p class="card-text">Recuerda que como máximo puedes comprar solo 5 plazas por compra</p>
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ formulario.as_p }}
