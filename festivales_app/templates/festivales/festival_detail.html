@@ -30,7 +30,6 @@
                     {% endif %}
                     {% if festival.boletos_disponibles > 0 %}
                         
-                        <li><a href="{% url 'comprar_entradas' festival.pk %}" class="btn btn-primary"><i class="bi bi-cart-plus"></i> Comprar entradas</a></li>
                     {% else %}
                         <li><em><i class="bi bi-exclamation-triangle"></i> Entradas agotadas...</em></li>
                     {% endif %}

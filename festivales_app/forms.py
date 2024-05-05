@@ -97,3 +97,14 @@ class CrearAutobusForm(forms.ModelForm):
             "fecha_salida": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
         }
     
+    
+
+
+class FestivalNombreFiltroForm(forms.Form):
+    nombre_festival = forms.CharField(
+        required=False,
+        label="Nombre del festival",
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Nombre del festival"}
+        ),
+    )

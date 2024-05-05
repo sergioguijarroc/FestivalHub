@@ -12,7 +12,7 @@ from django.views.generic import (
 )
 # Create your views here.
 from .models import Festival,Autobus
-from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm
+from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm, FestivalNombreFiltroForm
 from typing import Any
 
 
@@ -120,15 +120,20 @@ class AutobusCreateView(CreateView):
     success_url = reverse_lazy("festival_list")
     
     def form_valid(self,form):
+        autobus = form.save(commit=False)
+        autobus.plazas_disponibles = autobus.capacidad
         festival_pk = self.kwargs['festival_pk']
         festival = get_object_or_404(Festival, pk=festival_pk)
         form.instance.festival_relacionado = festival
+        festival.save()
         return super().form_valid(form)
+    
+    
     
 class FestivalesConAutobusesListView(ListView):
     model = Festival
     template_name = "festivales/festival_list_con_autobuses.html"
-    form_class = FestivalFiltroForm
+    form_class = FestivalNombreFiltroForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -139,20 +144,32 @@ class FestivalesConAutobusesListView(ListView):
         
         if form.is_valid():
             nombre_festival = form.cleaned_data.get("nombre_festival")
-            ubicacion = form.cleaned_data.get("ubicacion_festival")
-            fecha_orden = form.cleaned_data.get("fecha_orden")
             
             if nombre_festival:
                 festivales_con_bus = festivales_con_bus.filter(nombre__icontains=nombre_festival)
 
-            if ubicacion:
-                festivales_con_bus = festivales_con_bus.filter(ubicacion_festival=ubicacion)
-
-            if fecha_orden == "ascendente":
-                festivales_con_bus = festivales_con_bus.order_by("fecha")
-            else:
-                festivales_con_bus = festivales_con_bus.order_by("-fecha")
-
             context["festivales_con_bus"] = festivales_con_bus
+            
+        return context
+
+class FestivalConParkingListView(ListView):
+    model = Festival
+    template_name = "festivales/festival_list_con_parking.html"
+    form_class = FestivalNombreFiltroForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = self.form_class(self.request.GET)
+        context["form"] = form
+        
+        festivales_con_parking = Festival.objects.filter(disponibilidad_parking=True)
+        
+        if form.is_valid():
+            nombre_festival = form.cleaned_data.get("nombre_festival")
+            
+            if nombre_festival:
+                festivales_con_parking = festivales_con_parking.filter(nombre__icontains=nombre_festival)
+
+            context["festivales_con_parking"] = festivales_con_parking
             
         return context

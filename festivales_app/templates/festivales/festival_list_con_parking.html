@@ -6,7 +6,7 @@ Lista de Festivales con Autobuses
 {% block content %}
 <div class="row">
     <div class="col">
-        <h1 class="text-center mb-5 text-white">Todos los festivales con disponibilidad de autobuses</h1>
+        <h1 class="text-center mb-5 text-white">Todos los festivales con disponibilidad de parking</h1>
 
         <form action="" method="GET">
             {% csrf_token %}
@@ -19,7 +19,7 @@ Lista de Festivales con Autobuses
         </form>
         <h2 class="mt-5 mb-4">Festivales con Autobuses Disponibles:</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for festival in festivales_con_bus %}
+            {% for festival in festivales_con_parking %}
             <div class="col">
                 <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
                     <img src="{{ festival.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Festival Image"
@@ -39,7 +39,6 @@ Lista de Festivales con Autobuses
             </div>
             {% endfor %}
         </div>
-
     </div>
 </div>
 

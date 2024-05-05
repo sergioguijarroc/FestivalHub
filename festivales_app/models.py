@@ -39,6 +39,7 @@ class Autobus(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_salida = models.DateTimeField()
     festival_relacionado = models.ForeignKey("Festival", on_delete=models.CASCADE)
+    plazas_disponibles = models.PositiveIntegerField()
     
     def __str__(self):
         return f"Autobús del festival {self.festival_relacionado.nombre} con salida desde {self.ubicacion_parada}"
@@ -51,6 +52,7 @@ class Parking(models.Model):
     capacidad = models.PositiveIntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     festival_relacionado = models.ForeignKey("Festival", on_delete=models.CASCADE)
+    plazas_disponibles = models.PositiveIntegerField()
     
     def __str__(self):
         return f"Parking del festival {self.festival_relacionado.nombre} con ubicación en {self.ubicacion_parada}"
