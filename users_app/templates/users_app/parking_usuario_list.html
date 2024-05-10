@@ -5,7 +5,7 @@
 {% block content %}
 <div class="row">
     <div class="col">
-        <h2><i class="bi bi-calendar-check"></i> Todas las reservas de {{ request.user.username }}</h2>
+        <h2 class="text-center"><i class="bi bi-p-square"></i>arkings reservados de {{ request.user.username }}</h2>
         {%if reservas%}
             {% for reserva in reservas %}
             <div class="card mb-3">
@@ -13,7 +13,7 @@
                     <h5 class="card-title">Parking para el festival {{ reserva.parking_reserva.festival_relacionado }}</h5>
                     <p class="card-text"><i class="bi bi-calendar"></i> Ubicación: {{ reserva.parking_reserva.ubicacion_parking }}</p>
                     <p class="card-text"><i class="bi bi-coin"></i> Precio: {{ reserva.parking_reserva.precio }}€</p>
-                    <p class="card-text"><i class="bi bi-ticket"></i> Número de tickets comprados: {{ reserva.cantidad_tickets }}</p>
+                    <p class="card-text"><i class="bi bi-ticket"></i> Número de plazas reservadas: {{ reserva.cantidad_tickets }}</p>
                     <p class="card-text"><i class="bi bi-cash-stack"></i> Total: {{ reserva.importe }}€</p>
                 </div>
             </div>

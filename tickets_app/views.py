@@ -139,7 +139,7 @@ class ConfirmacionCompraBus(View):
             cantidad_tickets=unidades,
             importe=importe,
         )
-        return redirect("listar_reservas_usuario")
+        return redirect("listar_reservas_autobus_usuario")
     
 class ReservarPlazaParking(View):
     def get(self, request, pk):
@@ -158,7 +158,7 @@ class ReservarPlazaParking(View):
             unidades = formulario.cleaned_data["cantidad_tickets"]
             return redirect(
                 "confirmar_compra_parking",
-                pk,  # Le paso la pk del parking para recogerla luego en ConfirmaciónCompra
+                pk, 
                 unidades,
             )
         return render(
@@ -201,4 +201,4 @@ class ConfirmacionCompraParking(View):
             cantidad_tickets=unidades,
             importe=importe,
         )
-        return redirect("listar_reservas_usuario")
+        return redirect("listar_reservas_parking_usuario")

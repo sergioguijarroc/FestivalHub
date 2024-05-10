@@ -37,17 +37,20 @@
                     {% endif %}
                     {% if conciertos %}
                     <li>
-                        <a href="{% url 'artistas_festival_list' festival.pk %}" class="btn btn-primary">
+                        <a href="{% url 'artista_festival_list' festival.pk %}" class="btn btn-primary">
                             <i class="bi bi-people"></i> Ver Artistas del Festival
                         </a>
                     </li>
                 {% endif %}
                     {% if user.is_staff %}
+                    <br>
                     <li><a href="{% url 'concierto_create' festival.pk %}" class="btn btn-primary"><i class="bi bi-plus"></i> Añadir concierto</a></li>
                     {% if festival.disponibilidad_autobuses %}
+                    <br>
                     <li><a href="{% url 'autobus_create' festival.pk %}" class="btn btn-primary"><i class="bi bi-plus"></i> Añadir autobús</a></li>
                     {% endif %}
                     {%if festival.disponibilidad_parking%}
+                    <br>
                     <li><a href="{% url 'parking_create' festival.pk %}" class="btn btn-primary"><i class="bi bi-plus"></i> Añadir parking</a></li>
                     {%endif%}
                    
