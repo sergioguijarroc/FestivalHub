@@ -10,14 +10,14 @@
             {% for reserva in reservas %}
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ reserva.concierto_reserva.nombre }}</h5>
-                    <p class="card-text"><i class="bi bi-calendar"></i> Fecha: {{ reserva.concierto_reserva.fecha }}</p>
-                    <p class="card-text"><i class="bi bi-coin"></i> Precio: {{ reserva.concierto_reserva.precio_entrada }}€</p>
+                    <h5 class="card-title">{{ reserva.festival_reserva.nombre }}</h5>
+                    <p class="card-text"><i class="bi bi-calendar"></i> Fecha: {{ reserva.festival_reserva.fecha }}</p>
+                    <p class="card-text"><i class="bi bi-coin"></i> Precio: {{ reserva.festival_reserva.precio_entrada }}€</p>
                     <p class="card-text"><i class="bi bi-ticket"></i> Número de tickets comprados: {{ reserva.cantidad_tickets }}</p>
                     <p class="card-text"><i class="bi bi-cash-stack"></i> Total: {{ reserva.importe }}€</p>
-                    <a href="{% url 'concierto_detail' pk=reserva.concierto_reserva.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Más detalles del concierto</a>
-                    {% if reserva.concierto_reserva.fecha < fecha_actual %} 
-                    <a href="{% url 'concierto_review' pk=reserva.concierto_reserva.pk %}" class="btn btn-secondary"><i class="bi bi-chat-dots"></i> Deja aquí tu opinión</a>
+                    <a href="{% url 'festival_detail' pk=reserva.festival_reserva.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Más detalles del festival</a>
+                    {% if reserva.festival_reserva.fecha < fecha_actual %} 
+                    <a href="{% url 'festival_review' pk=reserva.festival_reserva.pk %}" class="btn btn-secondary"><i class="bi bi-chat-dots"></i> Deja aquí tu opinión</a>
                     {% endif %}
                 </div>
             </div>

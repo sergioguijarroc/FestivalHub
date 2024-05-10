@@ -7,7 +7,7 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title">{{ unidades }} entradas para el concierto {{ concierto.nombre }}</h2>
+                <h2 class="card-title">{{ unidades }} entradas para el concierto {{ festival.nombre }}</h2>
                 <form action="" method="POST">
                     {% csrf_token %}
                     <p class="card-text">Vas a comprar {{ unidades }} por un valor de {{ importe }}, ¿Estás seguro?</p>
