@@ -41,7 +41,7 @@ Detalles del Festival {{ festival.nombre }}
                     {% if festival.boletos_disponibles > 0 %}
                     <li>
                         <br>
-                        <a href="{% url 'comprar_entradas_festival' festival.pk %}" class="btn btn-primary">
+                        <a href="{% url 'mapa_interactivo' festival.pk %}" class="btn btn-primary">
                             <i class="bi bi-cart
                                 "></i> Comprar entradas</a>
                     </li>

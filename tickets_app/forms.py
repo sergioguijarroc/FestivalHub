@@ -1,9 +1,16 @@
 from django import forms
-from .models import ReservaFestival, ReservaAutobus,ReservaParking
+from .models import ReservaFestival,ReservaAutobus,ReservaParking
+from festivales_app.models import Festival
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from users_app.models import Usuario
 
+class ActualizarEntradas(forms.ModelForm):
+    class Meta:
+        model = Festival
+        fields = [
+            "cantidad_tickets"
+        ]
 
 class ReservaFestivalForm(forms.ModelForm):
     class Meta:
@@ -19,6 +26,10 @@ class ReservaFestivalForm(forms.ModelForm):
                 attrs={"class": "form-control", "min": 0, "max": 5}
             ),
         }
+        
+class DefinirNumeroEntradasPorZonaForm(forms.ModelForm):
+    class Meta:
+        model = Festival
 
 class ReservaAutobusForm(forms.ModelForm):
     class Meta:
@@ -33,7 +44,7 @@ class ReservaAutobusForm(forms.ModelForm):
             "cantidad_tickets": forms.NumberInput(
                 attrs={"class": "form-control", "min": 0, "max": 5}
             ),
-        } 
+        }
         
 
 class ReservaParkingForm(forms.ModelForm):

@@ -9,6 +9,16 @@ from .models import ReservaAutobus, ReservaFestival,ReservaParking
 # Create your views here.
 
 
+class MapaZonasFestival(View):
+    def get(self,request,pk):
+        festival = get_object_or_404(Festival,pk=pk)
+        return render(
+            request,
+            "tickets_app/mapa_zonas_festival.html",
+            {"festival": festival}
+        )
+        
+
 class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
     def get(self, request, pk):
         festival = get_object_or_404(Festival, pk=pk)
