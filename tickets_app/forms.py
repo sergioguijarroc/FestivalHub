@@ -9,7 +9,7 @@ class ActualizarEntradas(forms.ModelForm):
     class Meta:
         model = Festival
         fields = [
-            "cantidad_tickets"
+            "boletos_disponibles"
         ]
 
 class ReservaFestivalForm(forms.ModelForm):
@@ -27,10 +27,13 @@ class ReservaFestivalForm(forms.ModelForm):
             ),
         }
         
-class DefinirNumeroEntradasPorZonaForm(forms.ModelForm):
+""" class DefinirNumeroEntradasPorZonaForm(forms.ModelForm):
     class Meta:
         model = Festival
-
+        fields = [
+            
+        ]
+ """
 class ReservaAutobusForm(forms.ModelForm):
     class Meta:
         model = ReservaAutobus
