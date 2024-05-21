@@ -1,12 +1,13 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import ConfirmacionCompraParking, ReservarPlazaBus, ConfirmacionCompraBus, ReservarPlazaParking,ComprarEntradasFestival,ConfirmacionCompraFestival,MapaZonasFestival
+from .views import ConfirmacionCompraParking, ReservarPlazaBus, ConfirmacionCompraBus, ReservarPlazaParking,ComprarEntradasFestival,ConfirmacionCompraFestival,MapaZonasFestival,AñadirEntradasFestival
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     #Festival
     path("mapa_interactivo/<int:pk>",MapaZonasFestival.as_view(),name="mapa_interactivo"),
+    path("añadir_entradas_festival/<int:pk>",AñadirEntradasFestival.as_view(),name="añadir_entradas_festival"),
     path(
         "comprar_entradas_festival/<int:pk>",
         login_required(ComprarEntradasFestival.as_view()),

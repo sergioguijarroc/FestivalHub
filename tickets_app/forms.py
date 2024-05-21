@@ -84,3 +84,29 @@ class ReservaParkingForm(forms.ModelForm):
                 attrs={"class": "form-control", "min": 0, "max": 5}
             ),
         }
+        
+class AñadirEntradasFestivalForm(forms.ModelForm):
+    class Meta:
+        model=Festival
+        fields = [
+            "entradas_general",
+            "entradas_oro",
+            "entradas_platino",
+        ]
+        labels = {
+            "entradas_general": "Entradas general",
+            "entradas_oro": "Entradas oro",
+            "entradas_platino": "Entradas platino",
+        }
+        widgets = {
+            "entradas_general": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+            "entradas_oro": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+            "entradas_platino": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+        }
+        

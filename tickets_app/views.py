@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView
-from .forms import ReservaFestivalForm,ReservaAutobusForm,ReservaParkingForm
+from .forms import ReservaFestivalForm,ReservaAutobusForm,ReservaParkingForm,AñadirEntradasFestivalForm
 from festivales_app.models import Autobus,Parking,Festival
 from .models import ReservaAutobus, ReservaFestival,ReservaParking
 
@@ -18,6 +18,40 @@ class MapaZonasFestival(View):
             {"festival": festival}
         )
         
+class AñadirEntradasFestival(View):
+    def get(self,request,pk):
+        festival = get_object_or_404(Festival,pk=pk)
+        formulario = AñadirEntradasFestivalForm(instance=festival)
+        entradas_restantes = festival.boletos_disponibles - (festival.entradas_platino + festival.entradas_oro + festival.entradas_general)
+        return render(
+            request,
+            "tickets_app/añadir_entradas_festival.html",
+            {"festival" : festival , "form" : formulario,"entradas_restantes" : entradas_restantes}
+        )
+    def post(self,request,pk):
+        formulario = AñadirEntradasFestivalForm(request.POST)
+        if formulario.is_valid():
+            festival = get_object_or_404(Festival,pk=pk)
+            entradas_platino = formulario.cleaned_data["entradas_platino"]
+            entradas_oro = formulario.cleaned_data["entradas_oro"]
+            entradas_general = formulario.cleaned_data["entradas_general"]
+            if(entradas_platino + entradas_oro + entradas_general > festival.boletos_disponibles):
+                return render(
+                    request,
+                    "tickets_app/añadir_entradas_festival.html",
+                    {"festival" : festival , "form" : formulario , "error" : "La suma de las entradas no puede superar el número de boletos disponibles, revisa la cantidad de entradas y vuelve a intentarlo"} 
+                )
+            else:
+                festival.entradas_platino = entradas_platino
+                festival.entradas_oro = entradas_oro
+                festival.entradas_general = entradas_general
+                festival.save()
+                return redirect("festival_list")
+        return render(
+            request,
+            "tickets_app/añadir_entradas_festival.html",
+            {"festival" : festival , "form" : formulario}
+        )
 
 class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
     def get(self, request, pk):

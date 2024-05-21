@@ -45,6 +45,13 @@ Detalles del Festival {{ festival.nombre }}
                             <i class="bi bi-cart
                                 "></i> Comprar entradas</a>
                     </li>
+                    <br>
+                    <li>
+                        <a href="{% url 'añadir_entradas_festival' festival.pk %}" class="btn btn-primary">
+                            <i class="bi bi-plus
+                                "></i> Añadir entradas</a>
+                    </li>
+
 
 
                     {% else %}
