@@ -4,11 +4,6 @@ Creación de Festival
 {% endblock %}
 {% block content %}
 <h1>Creación de Festival</h1>
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Crear</button>
-</form>
 <div class="row" id="advertencia">
   <div class="col-12">
     <div class="custom-info w-100  my-3">
@@ -19,9 +14,11 @@ Creación de Festival
           </path>
         </svg>
       </div>
-      <div class="custom-info__title">Para añadir conciertos y los tipos de entradas, debe terminar de crear
+      <div class="custom-info__title">Para añadir conciertos con sus respectivos artistas y distribuir los diferentes
+        tipos de entradas, debe
+        terminar de crear
         este
-        festival y después editarlo.</div>
+        festival y añadirlo posteriormente desde los detalles del mismo.</div>
       <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()"><svg height="20" viewBox="0 0 20 20"
           width="20" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -31,6 +28,12 @@ Creación de Festival
     </div>
   </div>
 </div>
+<form method="POST" enctype="multipart/form-data" class="mb-3">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Crear</button>
+</form>
+
 
 
 {% endblock %}

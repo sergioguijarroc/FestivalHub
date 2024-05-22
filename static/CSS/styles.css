@@ -121,3 +121,18 @@ body {
   fill: #fff;
 }
 
+/*Slogan */
+.svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35vh; 
+  padding: 0 10px;
+}
+
+svg {
+  width: 90%; 
+  height: auto; 
+  min-width: 750px; 
+  min-height: 650px; 
+}
