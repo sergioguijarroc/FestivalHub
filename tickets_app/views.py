@@ -72,7 +72,7 @@ class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
         return render(
             request,
             "tickets_app/comprar_entradas_festival.html",
-            {"festival": festival, "formulario": formulario, "precio": precio},
+            {"festival": festival, "formulario": formulario, "precio": precio,"tipo_entrada":tipo_entrada},
         )
 
     def post(self, request, pk,tipo_entrada):
@@ -89,9 +89,10 @@ class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
             unidades = formulario.cleaned_data["cantidad_tickets"]
             return redirect(
                 "confirmar_compra_festival",
-                pk,  # Le paso la pk del concierto para recogerla luego en ConfirmaciónCompra
+                pk,  # Le paso la pk del festival para recogerla luego en ConfirmaciónCompra
                 unidades,
                 precio,
+                tipo_entrada,
             )
         return render(
             request,
@@ -106,6 +107,7 @@ class ConfirmacionCompraFestival(View):
         festival = get_object_or_404(Festival, pk=pk)
         unidades = kwargs.get("unidades", None)
         precio = kwargs.get("precio", None)
+        tipo_entrada = kwargs.get("tipo_entrada", None)
         usuario = request.user
         importe = float(precio) * unidades
 
@@ -117,6 +119,8 @@ class ConfirmacionCompraFestival(View):
                 "unidades": unidades,
                 "usuario": usuario,
                 "importe": importe,
+                "tipo_entrada": tipo_entrada,
+                "festival": festival,
             },
         )
 

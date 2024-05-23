@@ -30,7 +30,7 @@ class Concierto(models.Model):
     fecha = models.DateTimeField()
     descripcion = models.TextField()
     foto = models.ImageField(upload_to="conciertos")
-    festival_relacionado = models.ForeignKey(Festival, on_delete=models.SET_NULL, related_name="conciertos", null=True, blank=True)  #Con el related_name="conciertos" se puede acceder a los conciertos de un festival con festival.conciertos.all()
+    festival_relacionado = models.ForeignKey(Festival, on_delete=models.CASCADE, related_name="conciertos", null=True, blank=True)  #Con el related_name="conciertos" se puede acceder a los conciertos de un festival con festival.conciertos.all()
 
     def __str__(self):
         return f"{self.nombre} - {self.artista_concierto} - {self.fecha}"

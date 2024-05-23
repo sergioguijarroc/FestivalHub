@@ -14,7 +14,7 @@ urlpatterns = [
         name="comprar_entradas_festival",
     ),
     path(
-        "confirmar_compra_festival/<int:pk>/<int:unidades>/<str:precio>/",
+        "confirmar_compra_festival/<int:pk>/<int:unidades>/<str:precio>/<str:tipo_entrada>",
         login_required(ConfirmacionCompraFestival.as_view()),
         name="confirmar_compra_festival",
     ),
