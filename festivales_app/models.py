@@ -18,6 +18,9 @@ class Festival(models.Model):
     disponibilidad_autobuses = models.BooleanField(default=False)
     disponibilidad_parking = models.BooleanField(default=False)
     precio_entrada = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_entrada_platino = models.DecimalField(default=0,max_digits=10, decimal_places=2, null=True, blank=True)
+    precio_entrada_oro = models.DecimalField(default=0,max_digits=10, decimal_places=2, null=True, blank=True)
+    precio_entrada_general = models.DecimalField(default=0,max_digits=10, decimal_places=2, null=True, blank=True)
     genero_principal = models.CharField(max_length=100)
     
     def __str__(self):

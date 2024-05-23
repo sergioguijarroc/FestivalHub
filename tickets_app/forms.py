@@ -92,21 +92,38 @@ class AñadirEntradasFestivalForm(forms.ModelForm):
             "entradas_general",
             "entradas_oro",
             "entradas_platino",
+            "precio_entrada_general",
+            "precio_entrada_oro",
+            "precio_entrada_platino",
         ]
         labels = {
             "entradas_general": "Entradas general",
             "entradas_oro": "Entradas oro",
             "entradas_platino": "Entradas platino",
+            "precio_entrada_general": "Precio entrada general",
+            "precio_entrada_oro": "Precio entrada oro",
+            "precio_entrada_platino": "Precio entrada platino",
         }
         widgets = {
             "entradas_general": forms.NumberInput(
-                attrs={"class": "form-control"}
+                attrs={"class": "form-control", "min": 0}
             ),
             "entradas_oro": forms.NumberInput(
-                attrs={"class": "form-control"}
+                attrs={"class": "form-control", "min": 0}
             ),
             "entradas_platino": forms.NumberInput(
-                attrs={"class": "form-control"}
+                attrs={"class": "form-control","min" : 0}
             ),
+            "precio_entrada_general": forms.NumberInput(
+                attrs={"class": "form-control", "min": 0}
+            ),
+            "precio_entrada_oro": forms.NumberInput(
+                attrs={"class": "form-control", "min": 0}
+            ),
+            "precio_entrada_platino": forms.NumberInput(
+                attrs={"class": "form-control", "min": 0}
+            ),
+            
         }
+        
         

@@ -9,12 +9,12 @@ urlpatterns = [
     path("mapa_interactivo/<int:pk>",MapaZonasFestival.as_view(),name="mapa_interactivo"),
     path("añadir_entradas_festival/<int:pk>",AñadirEntradasFestival.as_view(),name="añadir_entradas_festival"),
     path(
-        "comprar_entradas_festival/<int:pk>",
+        "comprar_entradas_festival/<int:pk><str:tipo_entrada>",
         login_required(ComprarEntradasFestival.as_view()),
         name="comprar_entradas_festival",
     ),
     path(
-        "confirmar_compra_festival/<int:pk><int:unidades>",
+        "confirmar_compra_festival/<int:pk>/<int:unidades>/<str:precio>/",
         login_required(ConfirmacionCompraFestival.as_view()),
         name="confirmar_compra_festival",
     ),

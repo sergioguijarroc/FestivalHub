@@ -35,6 +35,9 @@ class AñadirEntradasFestival(View):
             entradas_platino = formulario.cleaned_data["entradas_platino"]
             entradas_oro = formulario.cleaned_data["entradas_oro"]
             entradas_general = formulario.cleaned_data["entradas_general"]
+            precio_entrada_platino = formulario.cleaned_data["precio_entrada_platino"]
+            precio_entrada_oro = formulario.cleaned_data["precio_entrada_oro"]
+            precio_entrada_general = formulario.cleaned_data["precio_entrada_general"]
             if(entradas_platino + entradas_oro + entradas_general > festival.boletos_disponibles):
                 return render(
                     request,
@@ -42,6 +45,9 @@ class AñadirEntradasFestival(View):
                     {"festival" : festival , "form" : formulario , "error" : "La suma de las entradas no puede superar el número de boletos disponibles, revisa la cantidad de entradas y vuelve a intentarlo"} 
                 )
             else:
+                festival.precio_entrada_platino = precio_entrada_platino
+                festival.precio_entrada_oro = precio_entrada_oro
+                festival.precio_entrada_general = precio_entrada_general
                 festival.entradas_platino = entradas_platino
                 festival.entradas_oro = entradas_oro
                 festival.entradas_general = entradas_general
@@ -54,24 +60,38 @@ class AñadirEntradasFestival(View):
         )
 
 class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
-    def get(self, request, pk):
+    def get(self, request, pk, tipo_entrada):
         festival = get_object_or_404(Festival, pk=pk)
         formulario = ReservaFestivalForm()
+        if tipo_entrada == "platino":
+            precio = festival.precio_entrada_platino
+        elif tipo_entrada == "oro":
+            precio = festival.precio_entrada_oro
+        else:
+            precio = festival.precio_entrada_general
         return render(
             request,
             "tickets_app/comprar_entradas_festival.html",
-            {"festival": festival, "formulario": formulario},
+            {"festival": festival, "formulario": formulario, "precio": precio},
         )
 
-    def post(self, request, pk):
+    def post(self, request, pk,tipo_entrada):
         formulario = ReservaFestivalForm(request.POST)
         if formulario.is_valid():
             festival = get_object_or_404(Festival, pk=pk)
+            
+            if tipo_entrada == "platino":
+                precio = str(festival.precio_entrada_platino)
+            elif tipo_entrada == "oro":
+                precio = str(festival.precio_entrada_oro)
+            else:
+                precio = str(festival.precio_entrada_general)
             unidades = formulario.cleaned_data["cantidad_tickets"]
             return redirect(
                 "confirmar_compra_festival",
                 pk,  # Le paso la pk del concierto para recogerla luego en ConfirmaciónCompra
                 unidades,
+                precio,
             )
         return render(
             request,
@@ -85,8 +105,9 @@ class ConfirmacionCompraFestival(View):
         pk = kwargs.get("pk", None)
         festival = get_object_or_404(Festival, pk=pk)
         unidades = kwargs.get("unidades", None)
+        precio = kwargs.get("precio", None)
         usuario = request.user
-        importe = festival.precio_entrada * unidades
+        importe = float(precio) * unidades
 
         return render(
             request,
@@ -103,8 +124,9 @@ class ConfirmacionCompraFestival(View):
         pk = kwargs.get("pk", None)
         festival = get_object_or_404(Festival, pk=pk)
         unidades = kwargs.get("unidades", None)
+        precio = kwargs.get("precio", None)
         usuario = self.request.user
-        importe = festival.precio_entrada * unidades
+        importe = float(precio) * unidades
 
         festival.boletos_disponibles -= unidades
         festival.save()

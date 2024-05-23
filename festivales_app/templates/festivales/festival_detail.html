@@ -5,31 +5,29 @@ Detalles del Festival {{ festival.nombre }}
 {% block content %}
 <div class="row">
     <div class="col-md-8 mx-auto">
+        
         <div class="card">
             <div class="card-body">
                 <h2 class="card-title"><i class="bi bi-music-note"></i> {{ festival.nombre }}</h2>
                 <ul class="list-unstyled">
-                    <li><strong><i class="bi bi-ticket"></i> Tickets disponibles:</strong> {{
-                        festival.boletos_disponibles }}</li>
+                    <li><strong><i class="bi bi-ticket"></i> Tickets disponibles:</strong> {{festival.boletos_disponibles }}</li>
                     <li><strong><i class="bi bi-calendar"></i> Fecha:</strong> {{ festival.fecha }}</li>
                     <li><strong><i class="bi bi-cash"></i> Precio de entrada:</strong> {{ festival.precio_entrada }}€
                     </li>
                     <li><strong><i class="bi bi-geo-alt"></i> Ubicación:</strong> {{ festival.ubicacion_festival }}</li>
-                    <li><strong><i class="bi bi-music-note-list"></i> Género principal:</strong> {{
-                        festival.genero_principal }}</li>
+                    <li><strong><i class="bi bi-music-note-list"></i> Género principal:</strong> {{festival.genero_principal }}</li>
                     <li><strong><i class="bi bi-justify"></i> Descripción:</strong> {{ festival.descripcion }}</li>
-                    <li><strong><i class="bi bi-bus"></i> Disponibilidad de autobuses:</strong> {{
-                        festival.disponibilidad_autobuses|yesno:"Sí,No" }}
+                    <li><strong><i class="bi bi-bus"></i> Disponibilidad de autobuses:</strong> {{festival.disponibilidad_autobuses|yesno:"Sí,No" }}
                         {%if festival.disponibilidad_autobuses%}
                         <a href="{% url 'autobus_list' festival.pk %}" class="btn btn-primary"><i
-                                class="bi bi-info-circle"></i> Ver detalles de autobuses</a>
+                                class="bi bi-info-circle"></i> Todos los autobuses de este festival</a>
                         {%endif%}
                     </li>
-                    <li><strong><i class="bi bi-parking"></i> Disponibilidad de parking:</strong> {{
-                        festival.disponibilidad_parking|yesno:"Sí,No"}}</li>
+                    <li><strong><i class="bi bi-parking"></i> Disponibilidad de parking:</strong>  {{festival.disponibilidad_parking|yesno:"Sí,No"}}</li>
                     {%if festival.disponibilidad_parking%}
+                    
                     <a href="{% url 'parking_list' festival.pk %}" class="btn btn-primary"><i
-                            class="bi bi-info-circle"></i> Ver detalles de parkings</a>
+                            class="bi bi-info-circle"></i> Ubicaciones de parking de este festival</a>
                     {%endif%}
                     {% if festival.valoracion_media %}
                     <li><strong><i class="bi bi-star-fill"></i> Valoración:</strong> {{ festival.valoracion_media }}
@@ -38,55 +36,86 @@ Detalles del Festival {{ festival.nombre }}
                     {% if festival.foto %}
                     <img src="{{ festival.foto.url }}" class="card-img-top mt-3 mb-3" alt="Foto del festival">
                     {% endif %}
-                    {% if festival.boletos_disponibles > 0 %}
-                    <li>
-                        <br>
-                        <a href="{% url 'mapa_interactivo' festival.pk %}" class="btn btn-primary">
-                            <i class="bi bi-cart
-                                "></i> Comprar entradas</a>
-                    </li>
-                    <br>
-                    <li>
-                        <a href="{% url 'añadir_entradas_festival' festival.pk %}" class="btn btn-primary">
-                            <i class="bi bi-plus
-                                "></i> Añadir entradas</a>
-                    </li>
-
-
-
-                    {% else %}
-                    <li><em><i class="bi bi-exclamation-triangle"></i> Entradas agotadas...</em></li>
-                    {% endif %}
-                    {% if conciertos %}
-                    <br>
-                    <li>
-                        <a href="{% url 'artista_festival_list' festival.pk %}" class="btn btn-primary">
-                            <i class="bi bi-people"></i> Ver Artistas del Festival
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% if user.is_staff %}
-                    <br>
-                    <li><a href="{% url 'concierto_create' festival.pk %}" class="btn btn-primary"><i
-                                class="bi bi-plus"></i> Añadir concierto</a></li>
-                    {% if festival.disponibilidad_autobuses %}
-                    <br>
-                    <li><a href="{% url 'autobus_create' festival.pk %}" class="btn btn-primary"><i
-                                class="bi bi-plus"></i> Añadir autobús</a></li>
-                    {% endif %}
-                    {%if festival.disponibilidad_parking%}
-                    <br>
-                    <li><a href="{% url 'parking_create' festival.pk %}" class="btn btn-primary"><i
-                                class="bi bi-plus"></i> Añadir parking</a></li>
-                    {%endif%}
-
-                    <br>
-                    <li><a href="{% url 'festival_update' festival.pk %}" class="btn btn-secondary"><i
-                                class="bi bi-pencil"></i> Editar festival</a></li>
-                    <br>
-                    <li><a href="{% url 'festival_delete' festival.pk %}" class="btn btn-danger"><i
-                                class="bi bi-trash"></i> Eliminar festival</a></li>
-                    {% endif %}
+                    <div class="row">
+                        {% if festival.boletos_disponibles > 0 %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'mapa_interactivo' festival.pk %}" class="btn btn-primary">
+                                    <i class="bi bi-cart"></i> Comprar entradas
+                                </a>
+                            </li>
+                        </div>
+                        {% else %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li><em><i class="bi bi-exclamation-triangle"></i> Entradas agotadas...</em></li>
+                        </div>
+                        {% endif %}
+                    
+                        {% if conciertos %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'artista_festival_list' festival.pk %}" class="btn btn-primary">
+                                    <i class="bi bi-people"></i> LineUp
+                                </a>
+                            </li>
+                        </div>
+                        {% endif %}
+                    
+                        {% if user.is_staff %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'añadir_entradas_festival' festival.pk %}" class="btn btn-primary">
+                                    <i class="bi bi-plus"></i> Añadir entradas
+                                </a>
+                            </li>
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'concierto_create' festival.pk %}" class="btn btn-primary">
+                                    <i class="bi bi-plus"></i> Añadir concierto
+                                </a>
+                            </li>
+                        </div>
+                    
+                        {% if festival.disponibilidad_autobuses %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'autobus_create' festival.pk %}" class="btn btn-primary">
+                                    <i class="bi bi-plus"></i> Añadir autobús
+                                </a>
+                            </li>
+                        </div>
+                        {% endif %}
+                    
+                        {% if festival.disponibilidad_parking %}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'parking_create' festival.pk %}" class="btn btn-primary">
+                                    <i class="bi bi-plus"></i> Añadir parking
+                                </a>
+                            </li>
+                        </div>
+                        {% endif %}
+                    
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'festival_update' festival.pk %}" class="btn btn-secondary">
+                                    <i class="bi bi-pencil"></i> Editar festival
+                                </a>
+                            </li>
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <li>
+                                <a href="{% url 'festival_delete' festival.pk %}" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Eliminar festival
+                                </a>
+                            </li>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
                 </ul>
             </div>
         </div>

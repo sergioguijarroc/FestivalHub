@@ -136,3 +136,7 @@ svg {
   min-width: 750px; 
   min-height: 650px; 
 }
+
+.enlace_entrada {
+  text-decoration: none;
+}
