@@ -11,6 +11,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ reserva.festival_reserva.nombre }}</h5>
+                    <p class="card-text">Tipo de entrada: {{reserva.tipo_entrada}}</p>
                     <p class="card-text"><i class="bi bi-calendar"></i> Fecha: {{ reserva.festival_reserva.fecha }}</p>
                     <p class="card-text"><i class="bi bi-coin"></i> Precio: {{ reserva.festival_reserva.precio_entrada }}€</p>
                     <p class="card-text"><i class="bi bi-ticket"></i> Número de tickets comprados: {{ reserva.cantidad_tickets }}</p>

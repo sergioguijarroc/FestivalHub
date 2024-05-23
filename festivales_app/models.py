@@ -25,6 +25,19 @@ class Festival(models.Model):
     
     def __str__(self):
         return self.nombre
+    def get_precio_entrada(self, tipo_entrada):
+        if tipo_entrada == "platino":
+            return self.precio_entrada_platino
+        elif tipo_entrada == "oro":
+            return self.precio_entrada_oro
+        return self.precio_entrada_general
+
+    def get_entradas_disponibles(self, tipo_entrada):
+        if tipo_entrada == "platino":
+            return self.entradas_platino
+        elif tipo_entrada == "oro":
+            return self.entradas_oro
+        return self.entradas_general
     class Meta:
         verbose_name_plural = "Festivales"
         
