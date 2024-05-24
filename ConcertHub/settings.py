@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['festivalhub-production.up.railway.app', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['http://*','https://festivalhub-production.up.railway.app']
+
 
 # Application definition
 
