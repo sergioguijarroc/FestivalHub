@@ -44,7 +44,6 @@ class CrearFestivalForm(forms.ModelForm):
             "foto",
             "disponibilidad_autobuses",
             "disponibilidad_parking",
-            "precio_entrada",
             "genero_principal",
         ]
         labels = {
@@ -55,7 +54,6 @@ class CrearFestivalForm(forms.ModelForm):
             "foto": "Foto",
             "disponibilidad_autobuses": "Disponibilidad de autobuses",
             "disponibilidad_parking": "Disponibilidad de parking",
-            "precio_entrada": "Precio de entrada",
             "genero_principal": "Género principal",
         }
         widgets = {
@@ -64,7 +62,6 @@ class CrearFestivalForm(forms.ModelForm):
             "ubicacion_festival": forms.Select(attrs={"class": "form-control"}),
             "descripcion": forms.Textarea(attrs={"class": "form-control", "placeholder": "Descripción del festival"}),
             "foto": forms.FileInput(attrs={"class": "form-control"}),
-            "precio_entrada": forms.NumberInput(attrs={"class": "form-control"}),
         }
         
 class EditarFestivalForm(forms.ModelForm):
@@ -78,7 +75,6 @@ class EditarFestivalForm(forms.ModelForm):
             "foto",
             "disponibilidad_autobuses",
             "disponibilidad_parking",
-            "precio_entrada",
             "genero_principal",
             "entradas_platino",
             "entradas_oro",
@@ -92,7 +88,6 @@ class EditarFestivalForm(forms.ModelForm):
             "foto": "Foto",
             "disponibilidad_autobuses": "Disponibilidad de autobuses",
             "disponibilidad_parking": "Disponibilidad de parking",
-            "precio_entrada": "Precio de entrada",
             "genero_principal": "Género principal",
         }
         widgets = {
@@ -101,7 +96,6 @@ class EditarFestivalForm(forms.ModelForm):
             "ubicacion_festival": forms.Select(attrs={"class": "form-control"}),
             "descripcion": forms.Textarea(attrs={"class": "form-control", "placeholder": "Descripción del festival"}),
             "foto": forms.FileInput(attrs={"class": "form-control"}),
-            "precio_entrada": forms.NumberInput(attrs={"class": "form-control"}),
         }
 
 """ class Autobus(models.Model):

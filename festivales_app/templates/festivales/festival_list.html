@@ -69,7 +69,6 @@
                         <h5 class="card-title text-white">{{ festival.nombre }}</h5>
                         <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ festival.fecha }}</p>
                         <p class="card-text text-white mb-1"><i class="bi bi-geo-alt"></i> Ubicación: {{ festival.ubicacion_festival }}</p>
-                        <p class="card-text text-white mb-3"><i class="bi bi-cash"></i> Precio: {{ festival.precio_entrada }}€</p>
                         <a href="{% url 'festival_detail' pk=festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a>
                         {% if user.is_staff %}
                         {% endif %}
@@ -91,7 +90,6 @@
                         <h5 class="card-title text-white">{{ festival.nombre }}</h5>
                         <p class="card-text text-white mb-1"><i class="bi bi-calendar"></i> Fecha: {{ festival.fecha }}</p>
                         <p class="card-text text-white mb-1"><i class="bi bi-geo-alt"></i> Ubicación: {{ festival.ubicacion_festival }}</p>
-                        <p class="card-text text-white mb-3"><i class="bi bi-cash"></i> Precio: {{ festival.precio_entrada }}€</p>
 
                         {% if user.is_staff %}
                         <a href="{% url 'festival_detail' pk=festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a>

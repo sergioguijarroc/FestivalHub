@@ -17,32 +17,50 @@ class MapaZonasFestival(View):
             "tickets_app/mapa_zonas_festival.html",
             {"festival": festival}
         )
-        
 class AñadirEntradasFestival(View):
-    def get(self,request,pk):
-        festival = get_object_or_404(Festival,pk=pk)
+    def get(self, request, pk):
+        festival = get_object_or_404(Festival, pk=pk)
         formulario = AñadirEntradasFestivalForm(instance=festival)
-        entradas_restantes_zona = festival.boletos_disponibles - (festival.entradas_platino + festival.entradas_oro + festival.entradas_general)
+
+        # Calculo las entradas restantes sin modificar los valores originales
+        entradas_platino = festival.entradas_platino if festival.entradas_platino is not None else 0
+        entradas_oro = festival.entradas_oro if festival.entradas_oro is not None else 0
+        entradas_general = festival.entradas_general if festival.entradas_general is not None else 0
+
+        entradas_restantes_zona = festival.boletos_disponibles - (entradas_platino + entradas_oro + entradas_general)
+
         return render(
             request,
             "tickets_app/añadir_entradas_festival.html",
-            {"festival" : festival , "form" : formulario,"entradas_restantes" : entradas_restantes_zona}
+            {
+                "festival": festival,
+                "form": formulario,
+                "entradas_restantes": entradas_restantes_zona
+            }
         )
-    def post(self,request,pk):
+
+    def post(self, request, pk):
+        festival = get_object_or_404(Festival, pk=pk)
         formulario = AñadirEntradasFestivalForm(request.POST)
+        
         if formulario.is_valid():
-            festival = get_object_or_404(Festival,pk=pk)
             entradas_platino = formulario.cleaned_data["entradas_platino"]
             entradas_oro = formulario.cleaned_data["entradas_oro"]
             entradas_general = formulario.cleaned_data["entradas_general"]
             precio_entrada_platino = formulario.cleaned_data["precio_entrada_platino"]
             precio_entrada_oro = formulario.cleaned_data["precio_entrada_oro"]
             precio_entrada_general = formulario.cleaned_data["precio_entrada_general"]
-            if(entradas_platino + entradas_oro + entradas_general > festival.boletos_disponibles):
+            
+            total_entradas = entradas_platino + entradas_oro + entradas_general
+            if total_entradas > festival.boletos_disponibles:
                 return render(
                     request,
                     "tickets_app/añadir_entradas_festival.html",
-                    {"festival" : festival , "form" : formulario , "error" : "La suma de las entradas no puede superar el número de boletos disponibles, revisa la cantidad de entradas y vuelve a intentarlo"} 
+                    {
+                        "festival": festival,
+                        "form": formulario,
+                        "error": "La suma de las entradas no puede superar el número de boletos disponibles, revisa la cantidad de entradas y vuelve a intentarlo"
+                    }
                 )
             else:
                 festival.precio_entrada_platino = precio_entrada_platino
@@ -53,12 +71,13 @@ class AñadirEntradasFestival(View):
                 festival.entradas_general = entradas_general
                 festival.save()
                 return redirect("festival_list")
+        
         return render(
             request,
             "tickets_app/añadir_entradas_festival.html",
-            {"festival" : festival , "form" : formulario}
+            {"festival": festival, "form": formulario}
         )
-
+        
 class ComprarEntradasFestival(View):
     def get(self, request, pk, tipo_entrada):
         festival = get_object_or_404(Festival, pk=pk)

@@ -19,10 +19,12 @@
                         <div class="custom-info__icon">
                           <i class="bi bi-info-circle-fill"></i>
                         </div>
-                        {% if entradas_restantes == 0 %}
-                        <div class="custom-info__title"> Recuerda que hay disponibles {{ festival.boletos_disponibles }} tickets en total debido al aforo. No puedes añadir más entradas que esa cantidad, pero puedes redistribuirlas. </div>
+                        {% if festival.entradas_platino is none and festival.entradas_oro is none and festival.entradas_general is none %}
+                        <div class="custom-info__title"> Todavía no se han asignado las entradas, recuerda que hay {{ festival.boletos_disponibles }} tickets en total debido al aforo. No puedes añadir más entradas que esa cantidad.</div>
+                        {% elif entradas_restantes > 0 %}
+                        <div class="custom-info__title"> Recuerda que hay disponibles {{ festival.boletos_disponibles }} tickets en total debido al aforo. Puedes asignar todavía {{ entradas_restantes }} entradas.</div>
                         {% else %}
-                        <div class="custom-info__title">Recuerda que hay disponibles {{ festival.boletos_disponibles }} tickets en total debido al aforo, no puedes añadir más de esa cantidad. Puedes asignar {{ entradas_restantes }} entradas todavía.</div>
+                        <div class="custom-info__title">No puedes añadir más entradas porque ya has asignado todas las entradas disponibles ({{ festival.boletos_disponibles }} tickets) pero puedes redistribuirlas.</div>
                         {% endif %}
                         <div class="custom-info__close mb-2" onclick="cerrarAdvertencia()">
                           <i class="bi bi-x-lg"></i>
