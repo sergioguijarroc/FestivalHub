@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-rbxun@ma1)xqfh1gu*lhix6pi8g3@2btf&v%yzr$3&jpm4kh=r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['festivalhub-production.up.railway.app', 'localhost']
 
 
 # Application definition
