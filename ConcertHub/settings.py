@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-rbxun@ma1)xqfh1gu*lhix6pi8g3@2btf&v%yzr$3&jpm4kh=r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['festivalhub-production.up.railway.app', 'localhost']
+ALLOWED_HOSTS = ['festivalhub-production.up.railway.app', '127.0.0.1']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "whitenoise.runserver_nostatic",
     "api",
     "concerts_app",
     "tickets_app",
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -142,6 +144,8 @@ AUTH_USER_MODEL = "users_app.Usuario"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = reverse_lazy("festival_list")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # settings.py
 

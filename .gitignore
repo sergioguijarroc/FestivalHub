@@ -3,5 +3,6 @@
 __pycache__
 myvenv
 /static
+staticfiles
 .DS_Store
 media

@@ -1,1 +1,1 @@
-web: gunicorn ConcertHub.wsgi
+web: python manage.py collectstatic && gunicorn ConcertHub.wsgi
