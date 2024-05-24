@@ -15,9 +15,10 @@ class ReservaFestival(models.Model):
         validators=[
             MinValueValidator(1),
             MaxValueValidator(5),
-        ]  # Como máximo puede comprar 5 boletos
+        ]  
     )
     importe = models.DecimalField(max_digits=10, decimal_places=2)
+    tipo_entrada = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.cliente_reserva} - {self.festival_reserva} - {self.cantidad_tickets}"

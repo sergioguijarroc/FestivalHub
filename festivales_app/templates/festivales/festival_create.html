@@ -1,12 +1,41 @@
 {% extends 'concerts_app/base.html' %}
 {% block title %}
-    Creación de Festival
+Creación de Festival
 {% endblock %}
 {% block content %}
-    <h1>Creación de Festival</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Crear</button>
-    </form>
+<h1>Creación de Festival</h1>
+<div class="row" id="advertencia">
+  <div class="col-12">
+    <div class="custom-info w-100  my-3">
+      <div class="custom-info__icon">
+        <i class="bi bi-info-circle-fill"></i>
+      </div>
+      <div class="custom-info__title">Para añadir conciertos con sus respectivos artistas y distribuir los diferentes
+        tipos de entradas, debe
+        terminar de crear
+        este
+        festival y añadirlo posteriormente desde los detalles del mismo.</div>
+      <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()">
+        <i class="bi bi-x-lg"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<form method="POST" enctype="multipart/form-data" class="mb-3">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Crear</button>
+</form>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function cerrarAdvertencia() {
+    let advertencia = document.getElementById("advertencia");
+    advertencia.style.display = "none"
+  }
+</script>
 {% endblock %}

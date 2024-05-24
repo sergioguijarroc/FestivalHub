@@ -70,13 +70,11 @@ class ConciertoCreateView(View):
         if concierto_form.is_valid() and artista_form.is_valid():
             festival = get_object_or_404(Festival, pk=festival_pk)
             
-            # Guardar el concierto
             concierto = concierto_form.save(commit=False)
             concierto.festival_relacionado = festival
             concierto.save()
             
 
-            # Guardar el artista
             artista = artista_form.save(commit=False)
             
             artista.save()

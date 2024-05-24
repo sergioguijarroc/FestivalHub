@@ -2,32 +2,104 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView
-from .forms import ReservaFestivalForm,ReservaAutobusForm,ReservaParkingForm
+from .forms import ReservaFestivalForm,ReservaAutobusForm,ReservaParkingForm,AñadirEntradasFestivalForm
 from festivales_app.models import Autobus,Parking,Festival
 from .models import ReservaAutobus, ReservaFestival,ReservaParking
 
 # Create your views here.
 
 
-class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
-    def get(self, request, pk):
-        festival = get_object_or_404(Festival, pk=pk)
-        formulario = ReservaFestivalForm()
+class MapaZonasFestival(View):
+    def get(self,request,pk):
+        festival = get_object_or_404(Festival,pk=pk)
         return render(
             request,
-            "tickets_app/comprar_entradas_festival.html",
-            {"festival": festival, "formulario": formulario},
+            "tickets_app/mapa_zonas_festival.html",
+            {"festival": festival}
+        )
+class AñadirEntradasFestival(View):
+    def get(self, request, pk):
+        festival = get_object_or_404(Festival, pk=pk)
+        formulario = AñadirEntradasFestivalForm(instance=festival)
+
+        # Calculo las entradas restantes sin modificar los valores originales
+        entradas_platino = festival.entradas_platino if festival.entradas_platino is not None else 0
+        entradas_oro = festival.entradas_oro if festival.entradas_oro is not None else 0
+        entradas_general = festival.entradas_general if festival.entradas_general is not None else 0
+
+        entradas_restantes_zona = festival.boletos_disponibles - (entradas_platino + entradas_oro + entradas_general)
+
+        return render(
+            request,
+            "tickets_app/añadir_entradas_festival.html",
+            {
+                "festival": festival,
+                "form": formulario,
+                "entradas_restantes": entradas_restantes_zona
+            }
         )
 
     def post(self, request, pk):
+        festival = get_object_or_404(Festival, pk=pk)
+        formulario = AñadirEntradasFestivalForm(request.POST)
+        
+        if formulario.is_valid():
+            entradas_platino = formulario.cleaned_data["entradas_platino"]
+            entradas_oro = formulario.cleaned_data["entradas_oro"]
+            entradas_general = formulario.cleaned_data["entradas_general"]
+            precio_entrada_platino = formulario.cleaned_data["precio_entrada_platino"]
+            precio_entrada_oro = formulario.cleaned_data["precio_entrada_oro"]
+            precio_entrada_general = formulario.cleaned_data["precio_entrada_general"]
+            
+            total_entradas = entradas_platino + entradas_oro + entradas_general
+            if total_entradas > festival.boletos_disponibles:
+                return render(
+                    request,
+                    "tickets_app/añadir_entradas_festival.html",
+                    {
+                        "festival": festival,
+                        "form": formulario,
+                        "error": "La suma de las entradas no puede superar el número de boletos disponibles, revisa la cantidad de entradas y vuelve a intentarlo"
+                    }
+                )
+            else:
+                festival.precio_entrada_platino = precio_entrada_platino
+                festival.precio_entrada_oro = precio_entrada_oro
+                festival.precio_entrada_general = precio_entrada_general
+                festival.entradas_platino = entradas_platino
+                festival.entradas_oro = entradas_oro
+                festival.entradas_general = entradas_general
+                festival.save()
+                return redirect("festival_list")
+        
+        return render(
+            request,
+            "tickets_app/añadir_entradas_festival.html",
+            {"festival": festival, "form": formulario}
+        )
+        
+class ComprarEntradasFestival(View):
+    def get(self, request, pk, tipo_entrada):
+        festival = get_object_or_404(Festival, pk=pk)
+        formulario = ReservaFestivalForm()
+        precio = festival.get_precio_entrada(tipo_entrada)
+        entradas_restantes_zona = festival.get_entradas_disponibles(tipo_entrada)
+        return render(
+            request,
+            "tickets_app/comprar_entradas_festival.html",
+            {"festival": festival, "formulario": formulario, "precio": precio, "tipo_entrada": tipo_entrada, "entradas_restantes_zona": entradas_restantes_zona},
+        )
+
+    def post(self, request, pk, tipo_entrada):
         formulario = ReservaFestivalForm(request.POST)
         if formulario.is_valid():
             festival = get_object_or_404(Festival, pk=pk)
             unidades = formulario.cleaned_data["cantidad_tickets"]
             return redirect(
                 "confirmar_compra_festival",
-                pk,  # Le paso la pk del concierto para recogerla luego en ConfirmaciónCompra
-                unidades,
+                pk=pk,
+                unidades=unidades,
+                tipo_entrada=tipo_entrada
             )
         return render(
             request,
@@ -37,41 +109,51 @@ class ComprarEntradasFestival(View):  # Hay que meterle que esté logueado
 
 
 class ConfirmacionCompraFestival(View):
-    def get(self, request, *args, **kwargs):
-        pk = kwargs.get("pk", None)
+    def get(self, request, pk, unidades, tipo_entrada):
         festival = get_object_or_404(Festival, pk=pk)
-        unidades = kwargs.get("unidades", None)
+        precio = festival.get_precio_entrada(tipo_entrada)
         usuario = request.user
-        importe = festival.precio_entrada * unidades
+        importe = float(precio) * unidades
 
         return render(
             request,
             "tickets_app/confirmacion_compra_festival.html",
             {
-                "concierto": festival,
+                "festival": festival,
                 "unidades": unidades,
                 "usuario": usuario,
                 "importe": importe,
+                "tipo_entrada": tipo_entrada,
             },
         )
 
-    def post(self, request, **kwargs):
-        pk = kwargs.get("pk", None)
+    def post(self, request, pk, unidades, tipo_entrada):
         festival = get_object_or_404(Festival, pk=pk)
-        unidades = kwargs.get("unidades", None)
-        usuario = self.request.user
-        importe = festival.precio_entrada * unidades
+        precio = festival.get_precio_entrada(tipo_entrada)
+        usuario = request.user
+
+        importe = float(precio) * unidades
+
+        if tipo_entrada == "platino":
+            festival.entradas_platino -= unidades
+        elif tipo_entrada == "oro":
+            festival.entradas_oro -= unidades
+        else:
+            festival.entradas_general -= unidades
 
         festival.boletos_disponibles -= unidades
         festival.save()
 
         ReservaFestival.objects.create(
-                festival_reserva=festival,
-                cliente_reserva=usuario,
-                cantidad_tickets=unidades,
-                importe=importe,
-            )
-        return redirect("listar_reservas_festival_usuario") 
+            festival_reserva=festival,
+            cliente_reserva=usuario,
+            cantidad_tickets=unidades,
+            importe=importe,
+            tipo_entrada=tipo_entrada,
+        )
+        return redirect("listar_reservas_festival_usuario")
+
+
 
 class ReservarPlazaBus(View):
     def get(self, request, pk):
@@ -196,3 +278,4 @@ class ConfirmacionCompraParking(View):
             importe=importe,
         )
         return redirect("listar_reservas_parking_usuario")
+    

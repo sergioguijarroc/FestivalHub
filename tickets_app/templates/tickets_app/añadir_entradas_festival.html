@@ -1,0 +1,52 @@
+{% extends 'concerts_app/base.html' %}
+{% block title %}
+    Añadir Entradas
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center">Añadir entradas para {{ festival.nombre }}</h2>
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <div class="row" id="advertencia">
+                    <div class="col-12 d-flex justify-content-center">
+                      <div class="custom-info text-center w-75 my-3">
+                        <div class="custom-info__icon">
+                          <i class="bi bi-info-circle-fill"></i>
+                        </div>
+                        {% if festival.entradas_platino is none and festival.entradas_oro is none and festival.entradas_general is none %}
+                        <div class="custom-info__title"> Todavía no se han asignado las entradas, recuerda que hay {{ festival.boletos_disponibles }} tickets en total debido al aforo. No puedes añadir más entradas que esa cantidad.</div>
+                        {% elif entradas_restantes > 0 %}
+                        <div class="custom-info__title"> Recuerda que hay disponibles {{ festival.boletos_disponibles }} tickets en total debido al aforo. Puedes asignar todavía {{ entradas_restantes }} entradas.</div>
+                        {% else %}
+                        <div class="custom-info__title">No puedes añadir más entradas porque ya has asignado todas las entradas disponibles ({{ festival.boletos_disponibles }} tickets) pero puedes redistribuirlas.</div>
+                        {% endif %}
+                        <div class="custom-info__close mb-2" onclick="cerrarAdvertencia()">
+                          <i class="bi bi-x-lg"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle-fill"></i> Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  function cerrarAdvertencia() {
+    let advertencia = document.getElementById("advertencia");
+    advertencia.style.display = "none"
+  }
+</script>
+{% endblock %}
