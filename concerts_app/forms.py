@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import BaseFormSet, formset_factory
 from .models import Concierto, Artista
+from datetime import datetime, timezone
+from django.forms import ValidationError
 
 class CrearConciertoForm(forms.ModelForm):
     class Meta:
@@ -20,6 +22,12 @@ class CrearConciertoForm(forms.ModelForm):
             "descripcion": forms.Textarea(attrs={"class": "form-control", "placeholder": "Descripción del concierto"}),
             "foto": forms.FileInput(attrs={"class": "form-control"}),
         }
+        
+        def clean_fecha(self):
+            fecha = self.cleaned_data.get("fecha")
+            if fecha < datetime.now(timezone.utc).date():
+                raise ValidationError("La fecha del festival no puede ser en el pasado.")
+            return fecha
 
 class ArtistaForm(forms.ModelForm):
     class Meta:

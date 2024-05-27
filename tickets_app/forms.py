@@ -86,7 +86,17 @@ class AñadirEntradasFestivalForm(forms.ModelForm):
             "precio_entrada_oro": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
             "precio_entrada_platino": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
         }
+    #Validar que al menos un tipo de entrada esté disponible
+    def clean(self):
+        cleaned_data = super().clean()
+        entradas_general = cleaned_data.get("entradas_general")
+        entradas_oro = cleaned_data.get("entradas_oro")
+        entradas_platino = cleaned_data.get("entradas_platino")
+        if entradas_general + entradas_oro + entradas_platino == 0:
+            raise forms.ValidationError("Debe haber al menos un tipo de entrada disponible.")
+        return cleaned_data
 
+    #Esto es para que los campos sean requeridos
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():

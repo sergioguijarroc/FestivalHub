@@ -1,5 +1,7 @@
+from datetime import datetime,timezone
 from django import forms
 from .models import Festival, Parking, Ubicacion, Autobus
+from django.forms import ValidationError
 
 
 class FestivalFiltroForm(forms.Form):
@@ -61,6 +63,13 @@ class CrearFestivalForm(forms.ModelForm):
             "foto": forms.FileInput(attrs={"class": "form-control"}),
         }
         
+    def clean_fecha(self):
+        fecha = self.cleaned_data.get("fecha")
+        if fecha < datetime.now(timezone.utc).date():
+            raise ValidationError("La fecha del festival no puede ser en el pasado.")
+        return fecha
+            
+        
 class EditarFestivalForm(forms.ModelForm):
     class Meta:
         model = Festival
@@ -121,8 +130,15 @@ class CrearAutobusForm(forms.ModelForm):
             "ubicacion_parada": forms.TextInput(attrs={"class": "form-control", "placeholder": "Ubicación de la parada"}),
             "capacidad": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Capacidad"}),
             "precio": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Precio"}),
-            "fecha_salida": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+            "fecha_salida": forms.DateInput(attrs={"class": "form-control", "type": "datetime-local"}),
+            "fecha": forms.DateTimeInput(attrs={"class": "form-control", "type": "datetime-local"}),
         }
+        
+        def clean_fecha_salida(self):
+            fecha_salida = self.cleaned_data.get("fecha_salida")
+            if fecha_salida < datetime.now(timezone.utc).date():
+                raise ValidationError("La fecha de salida del autobús no puede ser en el pasado.")
+            return fecha_salida
     
 class CrearParkingForm(forms.ModelForm):
     class Meta:
@@ -142,6 +158,12 @@ class CrearParkingForm(forms.ModelForm):
             "capacidad": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Capacidad"}),
             "precio": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Precio"}),
         }
+        
+        def clean_precio(self):
+            precio = self.cleaned_data.get("precio")
+            if precio < 0:
+                raise ValidationError("El precio del parking no puede ser negativo.")
+            return precio
 
 
 class FestivalNombreFiltroForm(forms.Form):
