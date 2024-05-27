@@ -3,7 +3,6 @@ from .models import Festival, Parking, Ubicacion, Autobus
 
 
 class FestivalFiltroForm(forms.Form):
-    
     nombre_festival = forms.CharField(
         required=False,
         label="Nombre del festival",
@@ -11,12 +10,7 @@ class FestivalFiltroForm(forms.Form):
             attrs={"class": "form-control", "placeholder": "Nombre del festival"}
         ),
     )
-    genero_principal = forms.ChoiceField(
-        choices=[('', 'Todos los géneros')] + [(g, g) for g in Festival.objects.order_by().values_list('genero_principal', flat=True).distinct()],
-        #g,g es para que el valor y el texto del option sean iguales
-        required=False,
-        widget=forms.Select(attrs={"class": "form-control"}),
-    ) 
+    genero_principal = forms.ChoiceField(choices=[], required=False, widget=forms.Select(attrs={"class": "form-control"}))
     ubicacion_festival = forms.ModelChoiceField(
         queryset=Ubicacion.objects.all(),
         required=False,
@@ -32,6 +26,9 @@ class FestivalFiltroForm(forms.Form):
         ),
         widget=forms.Select(attrs={"class": "form-control"}),
     )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['genero_principal'].choices = [('', 'Todos los géneros')] + [(g, g) for g in Festival.objects.order_by().values_list('genero_principal', flat=True).distinct()]
 
 class CrearFestivalForm(forms.ModelForm):
     class Meta:
