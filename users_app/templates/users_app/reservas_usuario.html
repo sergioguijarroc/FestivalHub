@@ -39,3 +39,18 @@ Lista de Reservas del usuario
     </a>
 </div>
 {% endblock %}
+
+{% block scripts %}
+<script>
+    // Función para quitar el foco después de hacer clic en una tarjeta
+    function removeFocus() {
+        document.activeElement.blur();
+    }
+
+    // Obtener todas las tarjetas y agregar un evento de clic
+    const cards = document.querySelectorAll('.custom-card');
+    cards.forEach(card => {
+        card.addEventListener('click', removeFocus);
+    });
+</script>
+{% endblock %}
