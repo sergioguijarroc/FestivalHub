@@ -95,12 +95,28 @@ class ComprarEntradasFestival(View):
         if formulario.is_valid():
             festival = get_object_or_404(Festival, pk=pk)
             unidades = formulario.cleaned_data["cantidad_tickets"]
-            return redirect(
-                "confirmar_compra_festival",
-                pk=pk,
-                unidades=unidades,
-                tipo_entrada=tipo_entrada
-            )
+            if festival.suficientes_entradas(tipo_entrada, unidades):
+                return redirect(
+                    "confirmar_compra_festival",
+                    pk=pk,
+                    unidades=unidades,
+                    tipo_entrada=tipo_entrada
+                )
+            else:
+                precio = festival.get_precio_entrada(tipo_entrada)
+                entradas_restantes_zona = festival.get_entradas_disponibles(tipo_entrada)
+                return render(
+                    request,
+                    "tickets_app/comprar_entradas_festival.html",
+                    {
+                        "festival": festival,
+                        "formulario": formulario,
+                        "precio": precio,
+                        "tipo_entrada": tipo_entrada,
+                        "entradas_restantes_zona": entradas_restantes_zona,
+                        "error": "Has seleccionado más entradas de las disponibles para la zona " + tipo_entrada + ". Por favor, selecciona una cantidad menor."
+                    },
+                )
         return render(
             request,
             "tickets_app/comprar_entradas_festival.html",

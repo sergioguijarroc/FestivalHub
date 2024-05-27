@@ -26,6 +26,7 @@ class ReservaFestivalForm(forms.ModelForm):
                 attrs={"class": "form-control", "min": 0, "max": 5}
             ),
         }
+
         
 
 class ReservaAutobusForm(forms.ModelForm):

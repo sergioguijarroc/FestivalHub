@@ -37,6 +37,14 @@ class Festival(models.Model):
         elif tipo_entrada == "oro":
             return self.entradas_oro
         return self.entradas_general
+    
+    def suficientes_entradas(self, tipo_entrada, cantidad):
+        if tipo_entrada == "platino":
+            return self.entradas_platino >= cantidad
+        elif tipo_entrada == "oro":
+            return self.entradas_oro >= cantidad
+        return self.entradas_general >= cantidad
+    
     class Meta:
         verbose_name_plural = "Festivales"
         

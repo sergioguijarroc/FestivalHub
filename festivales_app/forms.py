@@ -131,7 +131,6 @@ class CrearAutobusForm(forms.ModelForm):
             "capacidad": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Capacidad"}),
             "precio": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Precio"}),
             "fecha_salida": forms.DateInput(attrs={"class": "form-control", "type": "datetime-local"}),
-            "fecha": forms.DateTimeInput(attrs={"class": "form-control", "type": "datetime-local"}),
         }
         
         def clean_fecha_salida(self):
