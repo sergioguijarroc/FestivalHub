@@ -1,14 +1,24 @@
 import os
 from pathlib import Path
-from django.urls import reverse_lazy
 from dotenv import load_dotenv
+from django.urls import reverse_lazy
 
-# Cargar el archivo .env correspondiente
+# Establece el directorio base
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Carga las variables de entorno desde el archivo .env
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+# Obtén el entorno
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'local')
-if ENVIRONMENT == 'production':
-    load_dotenv('.env.production')
-else:
-    load_dotenv('.env')
+
+# Imprime las variables de entorno para verificar
+print(f"ENVIRONMENT: {os.getenv('ENVIRONMENT')}")
+print(f"PGDATABASE: {os.getenv('PGDATABASE')}")
+print(f"PGUSER: {os.getenv('PGUSER')}")
+print(f"PGPASSWORD: {os.getenv('PGPASSWORD')}")
+print(f"PGHOST: {os.getenv('PGHOST')}")
+print(f"PGPORT: {os.getenv('PGPORT')}")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
