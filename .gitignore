@@ -8,3 +8,5 @@ staticfiles
 media
 db.sqlite3
 .env
+start_local-sh
+start_local.sh
