@@ -150,3 +150,9 @@ svg {
 .enlace_entrada {
   text-decoration: none;
 }
+
+.card{
+  background-color: #24243e; 
+  border-radius: 10px;
+  border: none;
+}
