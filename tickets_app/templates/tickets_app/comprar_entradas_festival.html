@@ -7,12 +7,16 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                 {%if precio is not none and precio != 0 and entradas_restantes_zona is not none%}
-                 {%if error%}
+                {%if precio is not none and entradas_restantes_zona is not none%}
+                {%if error%}
                     <div class="alert alert-danger" role="alert">
                         {{ error }}
                     </div>
                 {%endif%}
+                {%if entradas_restantes_zona == 0%}
+                    <h2 class="card-title
+                    ">Las entradas para la zona {{tipo_entrada}} están agotadas</h2>
+                {%else%}
                 <h2 class="card-title">Comprar entradas para {{ festival.nombre }} en la zona {{tipo_entrada}} por {{precio}}€</h2>
                 <p class="card-text">Quedan: {{ entradas_restantes_zona }} en la zona {{tipo_entrada}} ¡No te quedes sin la tuya!</p>
                 <p class="card-text">Recuerda que como máximo puedes comprar solo 5 tickets por compra</p>
@@ -21,6 +25,8 @@
                     {{ formulario.as_p }}
                     <button type="submit" class="btn btn-primary"><i class="bi bi-cart-fill"></i> Comprar</button>
                 </form>
+                {%endif%}
+
                 {%else%}
                 <h2 class="card-title">Aún no se han asignado los precios para la zona {{tipo_entrada}} ¡Vuelve más adelante!</h2>
                 {%endif%}
