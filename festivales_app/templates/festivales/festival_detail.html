@@ -16,19 +16,15 @@ Detalles del Festival {{ festival.nombre }}
                     <li><strong><i class="bi bi-music-note-list"></i> Género principal:</strong> {{festival.genero_principal }}</li>
                     <li><strong><i class="bi bi-justify"></i> Descripción:</strong> {{ festival.descripcion }}</li>
                         {%if festival.disponibilidad_autobuses%}
-                        <a href="{% url 'autobus_list' festival.pk %}" class="btn btn-primary"><i
-                                class="bi bi-info-circle"></i> Todos los autobuses de este festival</a>
+                        <a href="{% url 'autobus_list' festival.pk %}" class="btn btn-primary mt-2"><i
+                                class="bi bi-info-circle"></i> Todos los autobuses</a>
                         {%endif%}
                     </li>
                     {%if festival.disponibilidad_parking%}
                     
-                    <a href="{% url 'parking_list' festival.pk %}" class="btn btn-primary"><i
-                            class="bi bi-info-circle"></i> Ubicaciones de parking de este festival</a>
+                    <a href="{% url 'parking_list' festival.pk %}" class="btn btn-primary mt-2"><i
+                            class="bi bi-info-circle"></i> Ubicaciones de parking</a>
                     {%endif%}
-                    {% if festival.valoracion_media %}
-                    <li><strong><i class="bi bi-star-fill"></i> Valoración:</strong> {{ festival.valoracion_media }}
-                    </li>
-                    {% endif %}
                     {% if festival.foto %}
                     <img src="{{ festival.foto.url }}" class="card-img-top mt-3 mb-3" alt="Foto del festival">
                     {% endif %}
