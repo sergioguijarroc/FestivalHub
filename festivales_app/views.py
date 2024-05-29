@@ -80,7 +80,7 @@ class FestivalListView(ListView):
 
 class FestivalCreateView(CreateView):
     model = Festival
-    form_class = CrearFestivalForm  # Utiliza el formulario de creación de festival
+    form_class = CrearFestivalForm  
     success_url = reverse_lazy("festival_list")
     template_name = "festivales/festival_create.html"
 
@@ -106,6 +106,10 @@ class FestivalUpdateView(UpdateView):
     form_class = CrearFestivalForm
     success_url = reverse_lazy("festival_list")
     template_name = "festivales/festival_update.html"
+    def form_valid(self, form):
+        if 'foto' not in form.changed_data:
+            form.instance.foto = self.get_object().foto
+        return super().form_valid(form)
 
 
 class FestivalDeleteView(DeleteView):
