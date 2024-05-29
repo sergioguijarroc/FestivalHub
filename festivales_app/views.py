@@ -34,7 +34,7 @@ class FestivalListView(ListView):
         )  # Esto es para que nos venga relleno el formulario
         context["form"] = form
         
-        festivalesFuturos = Festival.objects.filter(fecha__gt=timezone.now())
+        festivalesFuturos = Festival.objects.filter(fecha__gte=timezone.now())
         festivalesPasados = Festival.objects.filter(fecha__lt=timezone.now())
 
         if form.is_valid():
