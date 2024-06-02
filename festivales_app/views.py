@@ -15,6 +15,8 @@ from .models import Festival,Autobus, Parking
 from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm, FestivalNombreFiltroForm,CrearParkingForm
 from typing import Any
 
+from django.db.models import Sum
+
 from concerts_app.models import Artista, Concierto
 
 
@@ -210,3 +212,18 @@ class ArtistasFestivalListView(View):
         festival = get_object_or_404(Festival, pk=festival_pk)
         artistas = Artista.objects.filter(concierto__festival_concierto=festival).distinct()
         return render(request, self.template_name, {"artistas": artistas, "festival": festival})
+
+class ListarFestivalesMasVendidos(ListView):
+    model = Festival
+    template_name="festivales/festival_top_ventas.html"
+    
+    def get_context_data(self, **kwargs ) -> dict[str, Any]:
+        
+        context =  super().get_context_data(**kwargs)
+        top_festivales_ventas = Festival.objects.annotate(
+            sum_compras=Sum("reservafestival__cantidad_tickets")
+        ).order_by(
+            "-sum_compras"
+        )[:5]
+        context["festivales_top_ventas"] = top_festivales_ventas
+        return context

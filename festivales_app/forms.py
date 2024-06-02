@@ -57,7 +57,7 @@ class CrearFestivalForm(forms.ModelForm):
         }
         widgets = {
             "nombre": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre del festival"}),
-            "fecha": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
+            "fecha": forms.DateTimeInput(attrs={"class": "form-control", "type": "datetime-local"}),
             "ubicacion_festival": forms.Select(attrs={"class": "form-control"}),
             "descripcion": forms.Textarea(attrs={"class": "form-control", "placeholder": "Descripción del festival"}),
             "foto": forms.FileInput(attrs={"class": "form-control"}),

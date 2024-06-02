@@ -99,12 +99,17 @@
             </div>
             {% endfor %}
         </div>
-        <a href="/api" class="btn btn-primary mt-5"><i class="bi bi-code"></i> Visitar la api</a>
         <a href="{% url 'festival_create' %}" class="btn btn-primary mt-5"><i class="bi bi-plus"></i> Añadir Festival</a>
         <br>
         {% endif %}
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'listar_festivales_mas_vendidos' %}" class="btn btn-primary mt-5"><i class="bi bi-star"></i> Festivales Más Vendidos</a>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <script>
     function limpiarFiltros() {

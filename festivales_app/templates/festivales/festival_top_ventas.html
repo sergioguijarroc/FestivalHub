@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    Lista de festivales más vendidos
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1>Festivales Más Vendidos</h1>
+        {% if festivales_top_ventas %}
+            <table class="table mt-5 text-center">
+                <tr>
+                    <th>Festival</th><th>Ubicación</th><th>Número de entradas vendidas</th><th>Información del festival</th>
+                </tr>
+                {% for festival in festivales_top_ventas %}
+                    {%if festival.sum_compras%} <!--Si no tiene ninguna venta, no se pone-->
+                    <tr>
+                        <td>{{ festival.nombre }}</td>
+                        <td>{{ festival.ubicacion_festival.nombre }}</td>
+                        <td>{{ festival.sum_compras }}</td>
+                        <td><a href="{% url 'festival_detail' pk=festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a></td>
+                    </tr>
+                    {%endif%}
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No se han vendido entradas de festivales aún</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
