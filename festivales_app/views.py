@@ -10,6 +10,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+
+from tickets_app.models import ReservaFestival
 # Create your views here.
 from .models import Festival,Autobus, Parking
 from .forms import CrearFestivalForm, FestivalFiltroForm,CrearAutobusForm, FestivalNombreFiltroForm,CrearParkingForm
@@ -99,6 +101,8 @@ class FestivalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         festival = self.object
+        recaudacion = ReservaFestival.objects.filter(festival_reserva=festival).aggregate(sum_ventas=Sum("importe"))['sum_ventas']
+        context["recaudacion"] = recaudacion
         conciertos = Concierto.objects.filter(festival_relacionado=festival)
         context['conciertos'] = conciertos.exists()  #Esto es únicamente para poner el lineup en la plantilla
         return context
@@ -221,9 +225,9 @@ class ListarFestivalesMasVendidos(ListView):
         
         context =  super().get_context_data(**kwargs)
         top_festivales_ventas = Festival.objects.annotate(
-            sum_compras=Sum("reservafestival__cantidad_tickets")
+            sum_tickets_vendidos=Sum("reservafestival__cantidad_tickets")
         ).order_by(
-            "-sum_compras"
+            "-sum_tickets_vendidos"
         )[:5]
         context["festivales_top_ventas"] = top_festivales_ventas
         return context
