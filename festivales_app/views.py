@@ -106,10 +106,6 @@ class FestivalUpdateView(UpdateView):
     form_class = CrearFestivalForm
     success_url = reverse_lazy("festival_list")
     template_name = "festivales/festival_update.html"
-    def form_valid(self, form):
-        if 'foto' not in form.changed_data:
-            form.instance.foto = self.get_object().foto
-        return super().form_valid(form)
 
 
 class FestivalDeleteView(DeleteView):
@@ -172,7 +168,7 @@ class FestivalesConAutobusesListView(ListView):
         form = self.form_class(self.request.GET)
         context["form"] = form
         
-        festivales_con_bus = Festival.objects.filter(disponibilidad_autobuses=True)
+        festivales_con_bus = Festival.objects.filter(disponibilidad_autobuses=True, fecha__gte=timezone.now())
         
         if form.is_valid():
             nombre_festival = form.cleaned_data.get("nombre_festival")
@@ -194,7 +190,7 @@ class FestivalConParkingListView(ListView):
         form = self.form_class(self.request.GET)
         context["form"] = form
         
-        festivales_con_parking = Festival.objects.filter(disponibilidad_parking=True)
+        festivales_con_parking = Festival.objects.filter(disponibilidad_parking=True, fecha__gte=timezone.now())
         
         if form.is_valid():
             nombre_festival = form.cleaned_data.get("nombre_festival")

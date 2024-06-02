@@ -164,3 +164,4 @@ if DEBUG:
     # Configuración del servidor de desarrollo
     # Define el puerto que se utilizará para el servidor de desarrollo
     PORT = 8001
+

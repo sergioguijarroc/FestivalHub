@@ -70,39 +70,6 @@ class CrearFestivalForm(forms.ModelForm):
         return fecha
             
         
-class EditarFestivalForm(forms.ModelForm):
-    class Meta:
-        model = Festival
-        fields = [
-            "nombre",
-            "fecha",
-            "ubicacion_festival",
-            "descripcion",
-            "foto",
-            "disponibilidad_autobuses",
-            "disponibilidad_parking",
-            "genero_principal",
-            "entradas_platino",
-            "entradas_oro",
-            "entradas_general",
-        ]
-        labels = {
-            "nombre": "Nombre del festival",
-            "fecha": "Fecha",
-            "ubicacion_festival": "Ubicación",
-            "descripcion": "Descripción",
-            "foto": "Foto",
-            "disponibilidad_autobuses": "Disponibilidad de autobuses",
-            "disponibilidad_parking": "Disponibilidad de parking",
-            "genero_principal": "Género principal",
-        }
-        widgets = {
-            "nombre": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre del festival"}),
-            "fecha": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
-            "ubicacion_festival": forms.Select(attrs={"class": "form-control"}),
-            "descripcion": forms.Textarea(attrs={"class": "form-control", "placeholder": "Descripción del festival"}),
-            "foto": forms.FileInput(attrs={"class": "form-control"}),
-        }
 
 """ class Autobus(models.Model):
     ubicacion_parada = models.CharField(max_length=255)
