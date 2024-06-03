@@ -54,9 +54,8 @@
         <form action="" method="GET">
             {% csrf_token %}
             {{ form.as_p }}
-            
             <input type="submit" value="Filtrar" class="btn btn-primary mt-3 ">
-            <button type="button" class="btn btn-secondary mt-3" onclick="limpiarFiltros()" >Limpiar filtros</button>
+            <button type="submit" class="btn btn-secondary mt-3" onclick="limpiarFiltros()" >Limpiar filtros</button>
 
         </form>
         <h2 class="mt-5 mb-4">Próximos Festivales:</h2>
