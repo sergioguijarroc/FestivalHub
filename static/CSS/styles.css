@@ -129,7 +129,7 @@ body {
   fill: #fff;
 }
 
-/*Slogan */
+/*Logo */
 .svg-container {
   display: flex;
   justify-content: center;
@@ -155,4 +155,28 @@ svg {
   background-color: #24243e; 
   border-radius: 10px;
   border: none;
+}
+
+/*animacion desvanecer */
+@keyframes show {
+  from {
+    opacity: 0;
+    scale: 25%;
+  }
+
+  to {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+
+.card_transicion{
+  view-timeline-name: --image;
+  view-timeline-axis: block;
+
+  animation-timeline: --image;
+  animation-name: show;
+
+  animation-range: entry 20% cover 45%;
+  animation-fill-mode: both;
 }

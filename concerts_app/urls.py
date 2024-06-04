@@ -15,7 +15,6 @@ from .views import (
     ArtistaDetailView,
     ArtistaDeleteView,
     ArtistaUpdateView,
-    ArtistaFestivalList,
 )
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
@@ -45,9 +44,7 @@ urlpatterns = [
         login_required(ConciertoReview.as_view()),
         name="concierto_review",
     ),
-    # Artistas
-    path("artistas/festival_list/<int:festival_pk>", ArtistaFestivalList.as_view(), name="artista_festival_list"),
-    path("artistas/", ArtistaListView.as_view(), name="artista_list"),
+    # Artistas    path("artistas/", ArtistaListView.as_view(), name="artista_list"),
     path(
         "artistas/detail/<int:pk>", ArtistaDetailView.as_view(), name="artista_detail"
     ),

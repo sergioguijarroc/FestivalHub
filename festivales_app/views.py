@@ -211,12 +211,12 @@ class FestivalConParkingListView(ListView):
 
 class ArtistasFestivalListView(View):
     template_name = "festivales/artistas_festival_list.html"
-    
-    def get(self, request, festival_pk):
-        festival = get_object_or_404(Festival, pk=festival_pk)
-        artistas = Artista.objects.filter(concierto__festival_concierto=festival)
-        return render(request, self.template_name, {"artistas": artistas, "festival": festival})
 
+    def get(self, request, pk):
+        festival = get_object_or_404(Festival, pk=pk)
+        artistas = Artista.objects.filter(concierto__festival_relacionado=festival)
+        return render(request, self.template_name, {"artistas": artistas, "festival": festival})
+    
 class ListarFestivalesMasVendidos(ListView):
     model = Festival
     template_name="festivales/festival_top_ventas.html"

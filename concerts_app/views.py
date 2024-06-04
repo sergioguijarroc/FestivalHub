@@ -169,15 +169,6 @@ class ListarConciertosMasVendidos(ListView):
 # Usuarios normales
 
 
-
-class ArtistaFestivalList(View):
-    template_name = "concerts_app/artistas/artista_festival_list.html"
-    
-    def get(self, request, festival_pk):
-        festival_relacionado = get_object_or_404(Festival,pk=festival_pk)
-        artistas = Artista.objects.filter(concierto_relacionado__festival_relacionado=festival_relacionado)
-        return render(request, self.template_name, {"artistas": artistas, "festival": festival_relacionado})
-    
 class ArtistaListView(ListView):
     model = Artista
     template_name = "concerts_app/artistas/artista_list.html"
