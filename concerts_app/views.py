@@ -69,17 +69,16 @@ class ConciertoCreateView(View):
 
         if concierto_form.is_valid() and artista_form.is_valid():
             festival = get_object_or_404(Festival, pk=festival_pk)
-            
             concierto = concierto_form.save(commit=False)
             concierto.festival_relacionado = festival
+            concierto.nombre = concierto_form.cleaned_data['nombre_concierto']
+            
+            artista = artista_form.save()
+            concierto.artista_concierto = artista
+            
             concierto.save()
-            
-
-            artista = artista_form.save(commit=False)
-            
+            artista.concierto_relacionado = concierto
             artista.save()
-            Concierto.objects.filter(pk=concierto.pk).update(artista_concierto=artista)
-            Artista.objects.filter(pk=artista.pk).update(concierto_relacionado=concierto)
             
             return redirect('festival_list')
         else:

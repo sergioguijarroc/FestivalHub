@@ -7,16 +7,16 @@ from django.forms import ValidationError
 class CrearConciertoForm(forms.ModelForm):
     class Meta:
         model = Concierto
-        fields = ["nombre", "escenario", "fecha", "descripcion", "foto"]
+        fields = ["nombre_concierto", "escenario", "fecha", "descripcion", "foto"]
         labels = {
-            "nombre": "Nombre del concierto",
+            "nombre_concierto": "Nombre del concierto",
             "escenario": "Escenario",
             "fecha": "Fecha",
             "descripcion": "Descripción",
             "foto": "Foto",
         }
         widgets = {
-            "nombre": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre del concierto"}),
+            "nombre_concierto": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre del concierto"}),
             "escenario": forms.TextInput(attrs={"class": "form-control", "placeholder": "Escenario"}),
             "fecha": forms.DateTimeInput(attrs={"class": "form-control", "type": "datetime-local"}),
             "descripcion": forms.Textarea(attrs={"class": "form-control", "placeholder": "Descripción del concierto"}),
