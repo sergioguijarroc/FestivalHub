@@ -240,6 +240,6 @@ class ConciertosDeUnFestival(ListView):
         festival__pk = self.kwargs["festival_pk"]
         festival = get_object_or_404(Festival, pk=festival__pk)
         context["festival"] = festival
-        conciertos = Concierto.objects.filter(festival_relacionado = festival)
+        conciertos = Concierto.objects.filter(festival_relacionado = festival).order_by("fecha")
         context["conciertos"] = conciertos
         return context
