@@ -16,7 +16,7 @@
                         <td>{{ concierto.nombre_concierto }}</td>
                         <td>{{ concierto.artista_concierto.nombre }}</td>
                         <td>{{ concierto.fecha}}</td>
-                        <td><a href="{% url 'festival_detail' pk=festival.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a></td>
+                        <td><a href="{% url 'concierto_detail' pk=concierto.pk %}" class="btn btn-primary"><i class="bi bi-info-circle"></i> Detalles</a></td>
                     </tr>
                 {% endfor %}
             </table>

@@ -1,33 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}
-    Detalles del concierto de {{ concierto.nombre }}
+Detalles del Concierto {{ concierto.nombre }}
 {% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-md-8 mx-auto">
         <div class="card">
             <div class="card-body">
-                <h2 class="card-title"><i class="bi bi-music-note"></i> {{ concierto.nombre }}</h2>
+                <h2 class="card-title"><i class="bi bi-music-note"></i> {{ concierto.nombre_concierto }}</h2>
                 <ul class="list-unstyled">
-                    <li><strong><i class="bi bi-ticket"></i> Tickets disponibles:</strong> {{ concierto.boletos_disponibles }}</li>
+                    <li><strong><i class="bi bi-person"></i> Artista:</strong> {{ concierto.artista_concierto }}</li>
                     <li><strong><i class="bi bi-calendar"></i> Fecha:</strong> {{ concierto.fecha }}</li>
-                    <li><strong><i class="bi bi-cash"></i> Precio de entrada:</strong> {{ concierto.precio_entrada }}€</li>
-                    <li><strong><i class="bi bi-person"></i> Artista:</strong> {{ concierto.artista_concierto }} <a href="{% url 'artista_detail' concierto.artista_concierto.pk %}">(Más info del artista)</a></li>
-                    <li><strong><i class="bi bi-geo-alt"></i> Ubicación:</strong> {{ concierto.ubicacion_concierto }}</li>
-                    {% if concierto.valoracion_media %}
-                        <li><strong><i class="bi bi-star-fill"></i> Valoración:</strong> {{ concierto.valoracion_media }}</li>
-                    {% endif %}
-                    {% if concierto.boletos_disponibles > 0 %}
-                        {% if concierto.foto %}
-                            <img src="{{ concierto.foto.url }}" class="card-img-top mt-3 mb-3" alt="Foto del concierto">
-                        {% endif %}
-                        <li><a href="{% url 'comprar_entradas' concierto.pk %}" class="btn btn-primary"><i class="bi bi-cart-plus"></i> Comprar entradas</a></li>
-                    {% else %}
-                        <li><em><i class="bi bi-exclamation-triangle"></i> Entradas agotadas...</em></li>
+                    <li><strong><i class="bi bi-geo-alt"></i> Escenario:</strong> {{ concierto.escenario }}</li>
+                    <li><strong><i class="bi bi-justify"></i> Descripción:</strong> {{ concierto.descripcion }}</li>
+                    {% if concierto.foto %}
+                        <img src="{{ concierto.foto.url }}" class="card-img-top mt-3 mb-3" alt="Foto del concierto">
                     {% endif %}
                     {% if user.is_staff %}
-                        <br>
-                        <li><a href="{% url 'concierto_update' concierto.pk %}" class="btn btn-secondary"><i class="bi bi-pencil"></i> Editar concierto</a></li>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-warning" role="alert">
+                                <i class="bi bi-shield-lock"></i> Eres administrador. Puedes realizar las siguientes funciones:
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <a href="{% url 'concierto_update' concierto.pk %}" class="btn btn-secondary">
+                                <i class="bi bi-pencil"></i> Editar concierto
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <a href="{% url 'concierto_delete' concierto.pk %}" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Eliminar concierto
+                            </a>
+                        </div>
+                    </div>
                     {% endif %}
                 </ul>
             </div>

@@ -171,7 +171,7 @@ svg {
 }
 
 .card_transicion{
-  view-timeline-name: --image;
+  view-timeline-name: --image; /*Este nombre es para enlazar al scroll*/
   view-timeline-axis: block;
 
   animation-timeline: --image;
