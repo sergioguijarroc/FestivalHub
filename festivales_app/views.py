@@ -214,7 +214,7 @@ class ArtistasFestivalListView(View):
     
     def get(self, request, festival_pk):
         festival = get_object_or_404(Festival, pk=festival_pk)
-        artistas = Artista.objects.filter(concierto__festival_concierto=festival).distinct()
+        artistas = Artista.objects.filter(concierto__festival_concierto=festival)
         return render(request, self.template_name, {"artistas": artistas, "festival": festival})
 
 class ListarFestivalesMasVendidos(ListView):
@@ -230,4 +230,16 @@ class ListarFestivalesMasVendidos(ListView):
             "-sum_tickets_vendidos"
         )[:5]
         context["festivales_top_ventas"] = top_festivales_ventas
+        return context
+    
+class ConciertosDeUnFestival(ListView):
+    model = Concierto
+    template_name = "festivales/conciertos_del_festival.html"
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        festival__pk = self.kwargs["festival_pk"]
+        festival = get_object_or_404(Festival, pk=festival__pk)
+        context["festival"] = festival
+        conciertos = Concierto.objects.filter(festival_relacionado = festival)
+        context["conciertos"] = conciertos
         return context

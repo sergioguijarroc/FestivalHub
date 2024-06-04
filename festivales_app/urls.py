@@ -17,7 +17,9 @@ from .views import (
     ParkingCreateView,
     ParkingListView,
     ArtistasFestivalListView,
-    ListarFestivalesMasVendidos
+    ListarFestivalesMasVendidos,
+    ConciertosDeUnFestival,
+    
     
 )
 
@@ -25,6 +27,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
+    #Festivales
     path("", FestivalListView.as_view(), name="festival_list"),
     path("create/", staff_member_required(FestivalCreateView.as_view()), name="festival_create"),
     path("<int:pk>/", FestivalDetailView.as_view(), name="festival_detail"),
@@ -34,6 +37,7 @@ urlpatterns = [
     path("list_con_parking/", FestivalConParkingListView.as_view(), name="festival_list_con_parking"),
     path("artistas/<int:pk>/", ArtistasFestivalListView.as_view(), name="artistas_festival"),
     path("listar_festivales_mas_vendidos/", ListarFestivalesMasVendidos.as_view(), name="listar_festivales_mas_vendidos"),
+    path("conciertos_del_festival/<int:festival_pk>",ConciertosDeUnFestival.as_view(), name="conciertos_festival"),
     #Autobuses
     path("autobus/create/<int:festival_pk>/", AutobusCreateView.as_view(), name="autobus_create"),
     path("autobus/list/<int:festival_pk>/", AutobusListView.as_view(), name="autobus_list"),

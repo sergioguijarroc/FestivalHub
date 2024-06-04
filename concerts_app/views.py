@@ -84,6 +84,9 @@ class ConciertoCreateView(View):
             return redirect('festival_list')
         else:
             return render(request, self.template_name, {'concierto_form': concierto_form, 'artista_form': artista_form})
+        
+
+    
 class ConciertoDeleteView(DeleteView):
     model = Concierto
     success_url = reverse_lazy("concierto_list")
