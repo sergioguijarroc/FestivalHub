@@ -56,18 +56,20 @@ Detalles del Festival {{ festival.nombre }}
                                 <i class="bi bi-shield-lock"></i> Eres administrador. Puedes realizar las siguientes funciones:
                             </div>
                         </div>
+                        {%if recaudacion%}
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                             <strong>Recaudación total:</strong> {{ recaudacion }} €
                         </div>
+                        {%endif%}
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                             <a href="{% url 'añadir_entradas_festival' festival.pk %}" class="btn btn-primary">
-                                <i class="bi bi-plus"></i> Añadir entradas
+                                <i class="bi bi-ticket-perforated"></i> Gestionar entradas
                             </a>
                         </div>
                     
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                             <a href="{% url 'concierto_create' festival.pk %}" class="btn btn-primary">
-                                <i class="bi bi-plus"></i> Añadir concierto
+                                <i class="bi bi-plus"></i> Añadir concierto y artista
                             </a>
                         </div>
                     

@@ -3,6 +3,22 @@
     Comprar Entradas
 {% endblock %}
 {% block content %}
+{%if entradas_restantes_zona != 0%}
+<div class="row" id="advertencia">
+    <div class="col-12">
+      <div class="custom-info w-100  my-3">
+        <div class="custom-info__icon">
+          <i class="bi bi-info-circle-fill"></i>
+        </div>
+        <div class="custom-info__title">Recuerda que como máximo puedes comprar solo cinco tickets por compra
+        </div>
+        <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()">
+          <i class="bi bi-x-lg"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endif%}
 <div class="row">
     <div class="col">
         <div class="card">
@@ -17,9 +33,11 @@
                     <h2 class="card-title
                     ">Las entradas para la zona {{tipo_entrada}} están agotadas</h2>
                 {%else%}
+                
                 <h2 class="card-title">Compra tus entradas para {{ festival.nombre }} en la zona {{tipo_entrada}} por {{precio}}€</h2>
-                <p class="card-text">Quedan: {{ entradas_restantes_zona }} en la zona {{tipo_entrada}} ¡No te quedes sin la tuya!</p>
-                <p class="card-text">Recuerda que como máximo puedes comprar solo 5 tickets por compra</p>
+                <p class="card-text">Quedan: {{ entradas_restantes_zona }} entradas en la zona {{tipo_entrada}} ¡No te quedes sin la tuya!</p>
+                
+                <p class="card-text"></p>
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ formulario.as_p }}
@@ -27,10 +45,20 @@
                 </form>
                 {%endif%}
                 {%else%}
-                <h2 class="card-title">Aún no se han asignado los precios para la zona {{tipo_entrada}} ¡Vuelve más adelante!</h2>
+                <h2 class="card-title">Aún no se han asignado las entradas para la zona {{tipo_entrada}} ¡Vuelve más adelante!</h2>
                 {%endif%}
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+  function cerrarAdvertencia() {
+    let advertencia = document.getElementById("advertencia");
+    advertencia.style.display = "none"
+  }
+</script>
 {% endblock %}

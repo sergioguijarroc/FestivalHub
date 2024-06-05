@@ -177,6 +177,6 @@ svg {
   animation-timeline: --image;
   animation-name: show;
 
-  animation-range: entry 20% cover 45%;
+  animation-range: entry 30% cover 50%;
   animation-fill-mode: both;
 }

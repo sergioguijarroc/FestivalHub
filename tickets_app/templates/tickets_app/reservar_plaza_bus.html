@@ -3,6 +3,20 @@
     Comprar Entradas
 {% endblock %}
 {% block content %}
+<div class="row" id="advertencia">
+    <div class="col-12">
+      <div class="custom-info w-100  my-3">
+        <div class="custom-info__icon">
+          <i class="bi bi-info-circle-fill"></i>
+        </div>
+        <div class="custom-info__title">Recuerda que como máximo puedes reservar solo cinco plazas por compra
+        </div>
+        <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()">
+          <i class="bi bi-x-lg"></i>
+        </div>
+      </div>
+    </div>
+  </div>
 <div class="row">
     <div class="col">
         <div class="card">
@@ -19,4 +33,14 @@
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function cerrarAdvertencia() {
+    let advertencia = document.getElementById("advertencia");
+    advertencia.style.display = "none"
+  }
+</script>
 {% endblock %}
