@@ -20,7 +20,7 @@ Lista de Festivales con Autobuses
         <h2 class="mt-5 mb-4">Festivales con Autobuses Disponibles:</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4">
             {% for festival in festivales_con_parking %}
-            <div class="col">
+            <div class="col card_transicion">
                 <div class="card h-100" style="background-color: #24243e; border-radius: 10px; border: none;">
                     <img src="{{ festival.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Festival Image"
                         style="border-top-left-radius: 10px; border-top-right-radius: 10px;">

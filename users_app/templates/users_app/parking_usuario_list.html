@@ -3,11 +3,13 @@
     Lista de Reservas de festivales del usuario
 {% endblock %}
 {% block content %}
-<div class="row">
+<h2 class="text-center"><i class="bi bi-p-square"></i>arkings reservados de {{ request.user.username }}</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+{%if reservas%}
+{% for reserva in reservas %}
     <div class="col">
-        <h2 class="text-center"><i class="bi bi-p-square"></i>arkings reservados de {{ request.user.username }}</h2>
-        {%if reservas%}
-            {% for reserva in reservas %}
+
+
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Parking para el festival {{ reserva.parking_reserva.festival_relacionado }}</h5>
@@ -17,10 +19,11 @@
                     <p class="card-text"><i class="bi bi-cash-stack"></i> Total: {{ reserva.importe }}€</p>
                 </div>
             </div>
+        </div>
             {% endfor %}
         {%else%}
             <p>Todavía no has hecho ninguna reserva</p>
         {%endif%}
-    </div>
+    
 </div>
 {% endblock %}
