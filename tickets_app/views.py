@@ -186,9 +186,19 @@ class ReservarPlazaBus(View):
         if formulario.is_valid():
             autobus = get_object_or_404(Autobus, pk=pk)
             unidades = formulario.cleaned_data["cantidad_tickets"]
+            if autobus.plazas_disponibles < unidades:
+                return render(
+                    request,
+                    "tickets_app/reservar_plaza_bus.html",
+                    {
+                        "autobus": autobus,
+                        "formulario": formulario,
+                        "error": "No hay suficientes plazas disponibles para reservar"
+                    }
+                )
             return redirect(
                 "confirmar_compra_bus",
-                pk,  # Le paso la pk del autobus para recogerla luego en ConfirmaciónCompra
+                pk, 
                 unidades,
             )
         return render(
@@ -233,6 +243,8 @@ class ConfirmacionCompraBus(View):
         )
         return redirect("listar_reservas_autobus_usuario")
     
+    
+
 class ReservarPlazaParking(View):
     def get(self, request, pk):
         parking = get_object_or_404(Parking, pk=pk)
@@ -248,6 +260,16 @@ class ReservarPlazaParking(View):
         if formulario.is_valid():
             parking = get_object_or_404(Parking, pk=pk)
             unidades = formulario.cleaned_data["cantidad_tickets"]
+            if parking.plazas_disponibles < unidades:
+                return render(
+                    request,
+                    "tickets_app/reservar_plaza_parking.html",
+                    {
+                        "parking": parking,
+                        "formulario": formulario,
+                        "error": "No hay suficientes plazas disponibles para reservar"
+                    }
+                )
             return redirect(
                 "confirmar_compra_parking",
                 pk, 

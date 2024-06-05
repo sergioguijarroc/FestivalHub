@@ -1,64 +1,69 @@
 {% extends 'base.html' %}
+
 {% block title %}
     Comprar Entradas
 {% endblock %}
+
 {% block content %}
-{%if entradas_restantes_zona != 0%}
-<div class="row" id="advertencia">
-    <div class="col-12">
-      <div class="custom-info w-100  my-3">
-        <div class="custom-info__icon">
-          <i class="bi bi-info-circle-fill"></i>
-        </div>
-        <div class="custom-info__title">Recuerda que como máximo puedes comprar solo cinco tickets por compra
-        </div>
-        <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()">
-          <i class="bi bi-x-lg"></i>
-        </div>
-      </div>
+<div class="container">
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
     </div>
-  </div>
-{%endif%}
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                {%if precio is not none and entradas_restantes_zona is not none%}
-                {%if error%}
-                    <div class="alert alert-danger" role="alert">
-                        {{ error }}
+    {% endif %}
+    
+    {% if entradas_restantes_zona is not none %}
+        {% if entradas_restantes_zona == 0 %}
+        <h2 class="card-title">Las entradas para la zona {{ tipo_entrada }} están agotadas</h2>
+        {% else %}
+        <div class="row" id="advertencia">
+            <div class="col-12">
+                <div class="custom-info w-100 my-3">
+                    <div class="custom-info__icon">
+                        <i class="bi bi-info-circle-fill"></i>
                     </div>
-                {%endif%}
-                {%if entradas_restantes_zona == 0%}
-                    <h2 class="card-title
-                    ">Las entradas para la zona {{tipo_entrada}} están agotadas</h2>
-                {%else%}
-                
-                <h2 class="card-title">Compra tus entradas para {{ festival.nombre }} en la zona {{tipo_entrada}} por {{precio}}€</h2>
-                <p class="card-text">Quedan: {{ entradas_restantes_zona }} entradas en la zona {{tipo_entrada}} ¡No te quedes sin la tuya!</p>
-                
-                <p class="card-text"></p>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    {{ formulario.as_p }}
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-cart-fill"></i> Comprar</button>
-                </form>
-                {%endif%}
-                {%else%}
-                <h2 class="card-title">Aún no se han asignado las entradas para la zona {{tipo_entrada}} ¡Vuelve más adelante!</h2>
-                {%endif%}
+                    <div class="custom-info__title">
+                        Recuerda que como máximo puedes adquirir cinco tickets por compra
+                    </div>
+                    <div class="custom-info__close mb-2" onclick="cerrarAdvertencia()">
+                        <i class="bi bi-x-lg"></i>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            Compra tus entradas para {{ festival.nombre }} en la zona {{ tipo_entrada }} por {{ precio }}€
+                        </h2>
+                        <p class="card-text">
+                            Quedan: {{ entradas_restantes_zona }} entradas en la zona {{ tipo_entrada }} ¡No te quedes sin la tuya!
+                        </p>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ formulario.as_p }}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-cart-fill"></i> Comprar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+    <h2 class="card-title">Aún no se han asignado las entradas para la zona {{ tipo_entrada }} ¡Vuelve más adelante!</h2>
+    {% endif %}
 </div>
 {% endblock %}
-
 
 {% block scripts %}
 <script>
   function cerrarAdvertencia() {
     let advertencia = document.getElementById("advertencia");
-    advertencia.style.display = "none"
+    advertencia.style.display = "none";
   }
 </script>
 {% endblock %}
