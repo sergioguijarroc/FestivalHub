@@ -159,9 +159,3 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Otros ajustes de configuración...
 
-# Configuración del servidor de desarrollo
-if DEBUG:
-    # Configuración del servidor de desarrollo
-    # Define el puerto que se utilizará para el servidor de desarrollo
-    PORT = 8001
-
