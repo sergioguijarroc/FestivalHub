@@ -10,15 +10,13 @@
     {% if reservas %}
         {% for reserva in reservas %}
             <div class="col">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Autobús para el festival {{ reserva.autobus_reserva.festival_relacionado }}</h5>
-                        <p class="card-text"><i class="bi bi-calendar"></i> Fecha: {{ reserva.autobus_reserva.fecha_salida }}</p>
-                        <p class="card-text"><i class="bi bi-geo-alt"></i> Ubicación: {{ reserva.autobus_reserva.ubicacion_parada }}</p>
-                        <p class="card-text"><i class="bi bi-coin"></i> Precio: {{ reserva.autobus_reserva.precio }}€</p>
-                        <p class="card-text"><i class="bi bi-ticket"></i> Número de plazas reservadas: {{ reserva.cantidad_tickets }}</p>
-                        <p class="card-text"><i class="bi bi-cash-stack"></i> Total: {{ reserva.importe }}€</p>
-                    </div>
+                <div class="mi-reserva-card">
+                    <h5 class="reserva-card-title">Autobús para el festival {{ reserva.autobus_reserva.festival_relacionado }}</h5>
+                    <p class="reserva-card-text"><i class="bi bi-calendar"></i> {{ reserva.autobus_reserva.fecha_salida }}</p>
+                    <p class="reserva-card-text"><i class="bi bi-geo-alt"></i> Ubicación: {{ reserva.autobus_reserva.ubicacion_parada }}</p>
+                    <p class="reserva-card-text"><i class="bi bi-coin"></i> Precio: {{ reserva.autobus_reserva.precio }}€</p>
+                    <p class="reserva-card-text"><i class="bi bi-ticket"></i> Plazas reservadas: {{ reserva.cantidad_tickets }}</p>
+                    <p class="reserva-card-text"><i class="bi bi-cash-stack"></i> Total: {{ reserva.importe }}€</p>
                 </div>
             </div>
         {% endfor %}

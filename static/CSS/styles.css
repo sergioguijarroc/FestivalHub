@@ -181,12 +181,58 @@ svg {
   animation-fill-mode: both;
 }
 
-
-.festival-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Estilos para la card de reservas */
+.mi-reserva-card {
+  width: 190px;
+  height: auto;
+  background: #07182E;
+  position: relative;
+  border-radius: 20px;
+  margin: 10px auto;
+  padding: 10px;
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.festival-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+.mi-reserva-card > .reserva-card-title {
+  z-index: 1;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.mi-reserva-card > .reserva-card-text {
+  z-index: 1;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.mi-reserva-card::before {
+  content: '';
+  position: absolute;
+  width: 100px;
+  background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+  height: 130%;
+  animation: reserva-rotBGimg 3s linear infinite;
+  transition: all 0.2s linear;
+}
+
+@keyframes reserva-rotBGimg {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mi-reserva-card::after {
+  content: '';
+  position: absolute;
+  background: #07182E;
+  inset: 5px;
+  border-radius: 15px;
 }
