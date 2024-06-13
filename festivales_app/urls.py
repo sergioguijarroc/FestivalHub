@@ -39,10 +39,10 @@ urlpatterns = [
     path("listar_festivales_mas_vendidos/", ListarFestivalesMasVendidos.as_view(), name="listar_festivales_mas_vendidos"),
     path("conciertos_del_festival/<int:festival_pk>",ConciertosDeUnFestival.as_view(), name="conciertos_festival"),
     #Autobuses
-    path("autobus/create/<int:festival_pk>/", AutobusCreateView.as_view(), name="autobus_create"),
+    path("autobus/create/<int:festival_pk>/", staff_member_required(AutobusCreateView.as_view()), name="autobus_create"),
     path("autobus/list/<int:festival_pk>/", AutobusListView.as_view(), name="autobus_list"),
     #Parkings
-    path("parking/create/<int:festival_pk>/", ParkingCreateView.as_view(), name="parking_create"),
+    path("parking/create/<int:festival_pk>/", staff_member_required(ParkingCreateView.as_view()), name="parking_create"),
     path("parking/list/<int:festival_pk>/", ParkingListView.as_view(), name="parking_list"),
     
     

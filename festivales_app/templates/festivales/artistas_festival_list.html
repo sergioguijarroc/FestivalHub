@@ -8,9 +8,9 @@
     <div class="col">
         <h1 class="text-center mb-5 text-white">Artistas del Festival {{ festival.nombre }}</h1>
 
-        <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for artista in artistas %}
-            <div class="col card_transicion">
+            <div class="col card_transicion ">
                 <div class="card h-100 .card-imagen" style="background-color: #24243e; border-radius: 10px; border: none;">
                     <img src="{{ artista.foto.url }}" class="card-img-top img-fluid rounded-top imagen_festival_list" alt="Artista Image" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
                     <div class="card-body">

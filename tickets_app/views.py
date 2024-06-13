@@ -50,7 +50,7 @@ class AñadirEntradasFestival(View):
             precio_entrada_platino = formulario.cleaned_data["precio_entrada_platino"]
             precio_entrada_oro = formulario.cleaned_data["precio_entrada_oro"]
             precio_entrada_general = formulario.cleaned_data["precio_entrada_general"]
-            
+                        
             total_entradas = entradas_platino + entradas_oro + entradas_general
             if total_entradas > festival.boletos_disponibles:
                 return render(

@@ -196,7 +196,7 @@ class ArtistaDeleteView(DeleteView):
 
 class ArtistaUpdateView(UpdateView):
     model = Artista
-    fields = "__all__"
+    form_class = ArtistaForm
     success_url = reverse_lazy("concierto_list")
     template_name = "concerts_app/artista_update.html"
     template_name = "concerts_app/artistas/artista_update.html"

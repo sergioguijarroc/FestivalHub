@@ -60,7 +60,7 @@
             document.querySelectorAll(".dropdown-toggle").forEach(function (dropdownToggle) {
                 dropdownToggle.addEventListener("click", function (e) {
                     e.preventDefault();
-                    var dropdownMenu = this.nextElementSibling;
+                    let dropdownMenu = this.nextElementSibling;
                     if (!dropdownMenu.classList.contains("show")) {
                         document.querySelectorAll(".dropdown-menu.show").forEach(function (menu) {
                             menu.classList.remove("show");

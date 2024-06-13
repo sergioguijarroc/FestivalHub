@@ -3,11 +3,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import ConfirmacionCompraParking, ReservarPlazaBus, ConfirmacionCompraBus, ReservarPlazaParking,ComprarEntradasFestival,ConfirmacionCompraFestival,MapaZonasFestival,AñadirEntradasFestival
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 urlpatterns = [
     #Festival
     path("mapa_interactivo/<int:pk>",MapaZonasFestival.as_view(),name="mapa_interactivo"),
-    path("añadir_entradas_festival/<int:pk>",AñadirEntradasFestival.as_view(),name="añadir_entradas_festival"),
+    path("añadir_entradas_festival/<int:pk>",staff_member_required(AñadirEntradasFestival.as_view()),name="añadir_entradas_festival"),
     path(
         "comprar_entradas_festival/<int:pk><str:tipo_entrada>",
         login_required(ComprarEntradasFestival.as_view()),

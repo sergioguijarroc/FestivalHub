@@ -1,0 +1,2 @@
+Para loguearse como superadmin usar el usuario y contraseña: usuario usuario
+
