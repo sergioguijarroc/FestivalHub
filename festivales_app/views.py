@@ -132,6 +132,12 @@ class AutobusCreateView(CreateView):
     template_name = "autobuses/autobus_create.html"
     success_url = reverse_lazy("festival_list")
     
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["festival"] = get_object_or_404(Festival, pk=self.kwargs["festival_pk"]) 
+        return context
+    
+    
     def form_valid(self,form):
         autobus = form.save(commit=False)
         autobus.plazas_disponibles = autobus.capacidad

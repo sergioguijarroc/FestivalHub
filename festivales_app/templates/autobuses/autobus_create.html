@@ -4,6 +4,20 @@
 {% endblock %}
 {% block content %}
 <div class="row">
+    <div class="row" id="advertencia">
+        <div class="col-12">
+          <div class="custom-info w-100  my-3">
+            <div class="custom-info__icon">
+              <i class="bi bi-info-circle-fill"></i>
+            </div>
+            <div class="custom-info__title">Recuerda que la fecha de inicio del festival es el {{ festival.fecha }}.
+            </div>
+            <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()">
+              <i class="bi bi-x-lg"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     <div class="col-md-8 mx-auto">
         <div class="card">
             <div class="card-body">
@@ -17,4 +31,12 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+  function cerrarAdvertencia() {
+    let advertencia = document.getElementById("advertencia");
+    advertencia.style.display = "none"
+  }
+</script>
 {% endblock %}

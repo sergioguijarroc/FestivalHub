@@ -1,11 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Crear concierto</h2>
+    <h2>Crear concierto con su artista asociado para el festival {{festival.nombre}}</h2>
+    <div class="row" id="advertencia">
+        <div class="col-12">
+          <div class="custom-info w-100  my-3">
+            <div class="custom-info__icon">
+              <i class="bi bi-info-circle-fill"></i>
+            </div>
+            <div class="custom-info__title">Recuerda que la fecha de inicio del festival es el {{ festival.fecha }}.
+            </div>
+            <div class="custom-info__close mb-2" onclick=" cerrarAdvertencia()">
+              <i class="bi bi-x-lg"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ concierto_form.as_p }}
         {{ artista_form.as_p }}
         <button type="submit" class="btn btn-primary">Crear</button>
     </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function cerrarAdvertencia() {
+    let advertencia = document.getElementById("advertencia");
+    advertencia.style.display = "none"
+  }
+</script>
 {% endblock %}

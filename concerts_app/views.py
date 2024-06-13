@@ -59,9 +59,10 @@ class ConciertoCreateView(View):
     template_name = 'concerts_app/conciertos/crear_concierto.html'
 
     def get(self, request, festival_pk):
+        festival = get_object_or_404(Festival, pk=festival_pk)
         concierto_form = CrearConciertoForm()
         artista_form = ArtistaForm()
-        return render(request, self.template_name, {'concierto_form': concierto_form, 'artista_form': artista_form})
+        return render(request, self.template_name, {'concierto_form': concierto_form, 'artista_form': artista_form, 'festival': festival})
 
     def post(self, request, festival_pk):
         concierto_form = CrearConciertoForm(request.POST, request.FILES)
