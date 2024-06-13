@@ -236,3 +236,36 @@ svg {
   inset: 5px;
   border-radius: 15px;
 }
+
+/*Estilos de las fotos de las cards*/
+
+.card-imagen {
+  height: 250px;
+  overflow: hidden;
+}
+
+.imagen_festival_list {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .card-imagen {
+    height: 350px;
+  }
+
+  .imagen_festival_list {
+    height: 350px;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-imagen {
+    height: 450px;
+  }
+
+  .imagen_festival_list {
+    height: 450px;
+  }
+}

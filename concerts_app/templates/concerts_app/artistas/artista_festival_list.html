@@ -9,8 +9,8 @@
         <div class="row row-cols-1 row-cols-md-2 g-4">
             {% for artista in artistas %}
             <div class="col">
-                <div class="card" style="background-color: #24243e; border-radius: 10px; border: none;">
-                    <img src="{{ artista.foto.url }}" class="card-img-top img-fluid rounded-top" alt="Concierto Image" style="max-height: 300px;">
+                <div class="card card-imagen" style="background-color: #24243e; border-radius: 10px; border: none;">
+                    <img src="{{ artista.foto.url }}" class="card-img-top card-imagen img-fluid rounded-top imagen_festival_list" alt="Concierto Image" style="max-height: 400px;">
                     <div class="card-body">
                         <h5 class="card-title text-white">{{ artista.nombre }}</h5>
                         <p class="card-text text-white mb-1"><i class="bi bi-music-note"></i> Género: {{ artista.genero }}</p>
