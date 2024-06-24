@@ -48,6 +48,10 @@ Detalles del Festival {{ festival.nombre }}
                                 <i class="bi bi-people"></i> Conciertos con sus horarios
                             </a>
                         </div>
+                        {%else%}
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                            <em><i class="bi bi-exclamation-triangle"></i> No hay artistas confirmados aún</em>
+                        </div>
                         {% endif %}
                     
                         {% if user.is_staff %}
