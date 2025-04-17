@@ -79,6 +79,8 @@ class FestivalListView(ListView):
             
         
         return context
+    
+print("Hola")
 
 # Staff
 
