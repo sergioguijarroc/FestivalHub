@@ -81,7 +81,7 @@ class FestivalListView(ListView):
         return context
     
 print("Hola")
-
+print("Hello world")
 # Staff
 
 class FestivalCreateView(CreateView):
